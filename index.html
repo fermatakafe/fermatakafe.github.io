@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fermata — Menü</title>
+<meta name="description" content="Fermata menüsü. Nurol Life, Sarıyer, İstanbul. Her gün 08.00 — 00.00.">
+<meta name="theme-color" content="#F5F0E6">
+<meta property="og:title" content="Fermata — Menü">
+<meta property="og:description" content="Nurol Life, Sarıyer · 08.00 — 00.00">
+<link rel="icon" href="assets/fermata-icon-graphite.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  /* FERMATA brand inks: cream ground, graphite ink, one gold accent; Cormorant for names, Jost for everything functional */
+  :root{
+    --cream:#F5F0E6; --graphite:#3B3A36; --gold:#C7A267; --bronze:#A8834B; --grey:#9A8F7E; --rule:#DDD2BC;
+    --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif; --sans:Jost,system-ui,-apple-system,"Segoe UI",sans-serif;
+    color-scheme:light;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:60px;-webkit-text-size-adjust:100%}
+  body{background:var(--cream);color:var(--graphite);font-family:var(--sans);font-weight:300;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:560px;margin:0 auto;padding-inline:24px}
+
+  header{position:relative;max-width:560px;margin:0 auto;padding:64px 24px 34px;text-align:center}
+  .logo{display:block;width:188px;height:auto;margin:0 auto}
+  .hours{margin-top:16px;font-size:10.5px;font-weight:400;letter-spacing:.28em;text-transform:uppercase}
+  .tag{margin-top:18px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:19px;color:var(--grey)}
+  .lang{position:absolute;top:12px;right:12px;display:flex}
+  .lang button{background:none;border:0;min-width:44px;min-height:44px;font:400 10.5px var(--sans);letter-spacing:.24em;color:var(--grey);cursor:pointer}
+  .lang button[aria-pressed=true]{color:var(--graphite)}
+  .lang button:focus-visible,.chips a:focus-visible,.pic:focus-visible,.close:focus-visible{outline:1px solid var(--gold);outline-offset:2px}
+
+  nav{position:sticky;top:0;z-index:5;background:rgba(245,240,230,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top:.5px solid var(--graphite);border-bottom:.5px solid var(--rule)}
+  .chips{display:flex;gap:24px;overflow-x:auto;padding-inline:24px;scrollbar-width:none;max-width:560px;margin:0 auto}
+  .chips::-webkit-scrollbar{display:none}
+  .chips a{flex:none;display:flex;align-items:center;min-height:48px;text-decoration:none;color:var(--grey);font-size:10.5px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap;border-bottom:1px solid transparent;margin-bottom:-.5px}
+  .chips a.on{color:var(--graphite);border-bottom-color:var(--gold)}
+
+  section{padding-top:44px}
+  .cat{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:10.5px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);padding-bottom:9px;border-bottom:.5px solid var(--gold)}
+  .cat .alt{color:var(--grey)}
+  .items{display:flex;flex-direction:column;gap:26px;padding-top:24px}
+  .item{display:flex;align-items:center;gap:18px;min-height:64px}
+  .txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+  .name{font-family:var(--serif);font-weight:500;font-size:21px;line-height:1.15}
+  .sub{font-size:13px;line-height:1.35}
+  .price{margin-top:4px;font-size:14px;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+  .price .pl{font-size:9.5px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--bronze);margin-right:6px}
+  .price .gap{display:inline-block;width:18px}
+  .pic{flex:none;width:112px;height:112px;padding:0;border:0;background:none;cursor:zoom-in;border-radius:50%}
+  .pic img{width:100%;height:100%;object-fit:contain;display:block}
+  @media (max-width:360px){.pic{width:92px;height:92px}.name{font-size:19px}}
+  .items.compact{gap:16px}
+  .compact .item{min-height:0;align-items:baseline}
+  .compact .txt{flex-direction:row;align-items:baseline;gap:10px}
+  .compact .price{margin-top:0}
+
+  footer{margin-top:72px;padding:40px 24px calc(56px + env(safe-area-inset-bottom,0px));text-align:center;background:var(--graphite);color:var(--cream)}
+  footer .note{font-size:10.5px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;color:var(--rule);line-height:2}
+  footer .addr{margin-top:14px;font-size:13px}
+  footer a{color:var(--gold);text-decoration:none}
+  footer .hold{display:flex;align-items:center;max-width:200px;margin:26px auto 0}
+  footer .hold i{flex:1;border-top:.5px solid var(--gold)}
+  footer .hold b{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+
+  dialog{border:0;padding:0;margin:auto;width:min(520px,calc(100% - 32px));max-height:calc(100% - 32px);background:var(--cream);color:var(--graphite);overflow:auto}
+  dialog::backdrop{background:rgba(59,58,54,.7)}
+  dialog img{display:block;width:100%;aspect-ratio:1/1;object-fit:contain;padding:22px 22px 0}
+  .sheet{padding:10px 26px 28px;text-align:center;display:flex;flex-direction:column;gap:3px}
+  .sheet .name{font-size:24px}
+  .close{position:absolute;top:6px;right:6px;width:44px;height:44px;border:0;background:none;color:var(--graphite);font:300 26px var(--sans);cursor:pointer}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header>
+  <div class="lang" role="group" aria-label="Language / Dil">
+    <button type="button" data-l="tr" aria-pressed="true">TR</button>
+    <button type="button" data-l="en" aria-pressed="false">EN</button>
+  </div>
+  <img class="logo" src="assets/fermata-logo-graphite.svg" alt="Fermata" width="188" height="55">
+  <div class="hours" lang="en">Nurol Life · 08.00 — 00.00</div>
+  <p class="tag" lang="en">Hold the note</p>
+</header>
+<nav aria-label="Menü"><div class="chips" id="chips"></div></nav>
+<main class="wrap" id="menu"></main>
+<footer>
+  <p class="note" data-t="note"></p>
+  <p class="addr" data-t="address"></p>
+  <p class="addr"><a href="https://www.instagram.com/fermata.kafe/" rel="noopener">@fermata.kafe</a></p>
+  <div class="hold" aria-hidden="true"><i></i><b></b></div>
+</footer>
+
+<dialog id="photo" aria-labelledby="ph-name">
+  <button class="close" type="button" aria-label="Kapat / Close">×</button>
+  <img id="ph-img" alt="">
+  <div class="sheet"><span class="name" id="ph-name"></span><span class="sub" id="ph-sub"></span><span class="price" id="ph-price"></span></div>
+</dialog>
+
+<script>
+/* ───── MENU DATA ─────
+   Edit only this block when items, prices or photos change.
+   Dish names always show in Turkish with the English line under them; the TR/EN switch changes headings and notes.
+   price: number in TL, e.g. 320. Leave 0 and the menu shows "—".
+   Pizza: price is [normal, large], e.g. [380, 520]. Another two-price dish carries its own sizes (see Pişi).
+   note: a short line under the name instead of the English one (drink sizes). Another two-price dish carries its own sizes (see Pişi).
+   note: a short line under the name instead of the English one (drink sizes). Another two-price dish carries its own sizes (see Pişi).
+   note: a short line under the name instead of the English one (drink sizes).
+   img: the dish's file name in img/ (a transparent .webp, plus a small copy in img/thumb/). Leave "" for no photo. */
+const MENU = {
+  text: {
+    note:    { tr: "Fiyatlar TL · KDV dahil · Alerjen bilgisi için ekibimize danışın",
+               en: "Prices in TL · VAT included · Ask our team about allergens" },
+    address: { tr: "Nurol Life, Huzur Mah. Metin Oktay Cad. No:3, Sarıyer / İstanbul",
+               en: "Nurol Life, Huzur Mah. Metin Oktay Cad. No:3, Sarıyer / Istanbul" }
+  },
+  sections: [
+    { id: "kahvalti", name: { tr: "Kahvaltı", en: "Breakfast" }, items: [
+      { name: { tr: "Sahanda yumurta", en: "Fried eggs" }, price: 380, img: "sahanda-yumurta.webp" },
+      { name: { tr: "Domatesli omlet", en: "Tomato omelette" }, price: 430, img: "domatesli-omlet.webp" },
+      { name: { tr: "Ispanaklı omlet", en: "Spinach omelette" }, price: 450, img: "ispanakli-omlet.webp" },
+      { name: { tr: "Bacon'lı omlet", en: "Bacon omelette" }, price: 520, img: "baconli-omlet.webp" },
+      { name: { tr: "Pişi", en: "Turkish fried dough" }, price: [205, 350], sizes: { tr: ["2'li", "4'lü"], en: ["2 pcs", "4 pcs"] }, img: "pisi.webp" }
+    ]},
+    { id: "tost", name: { tr: "Tost", en: "Toasties" }, items: [
+      { name: { tr: "Kaşarlı tost", en: "Kashar cheese" }, price: 380, img: "kasarli-tost.webp" },
+      { name: { tr: "Sucuklu tost", en: "Sucuk" }, price: 455, img: "sucuklu-tost.webp" },
+      { name: { tr: "Peynirli tost", en: "White cheese" }, price: 380, img: "peynirli-tost.webp" },
+      { name: { tr: "Bacon'lı tost", en: "Bacon" }, price: 590, img: "baconli-tost.webp" }
+    ]},
+    { id: "salata", name: { tr: "Salata", en: "Salads" }, items: [
+      { name: { tr: "Sezar salata", en: "Caesar salad" }, price: 670, img: "sezar.webp" },
+      { name: { tr: "Fermata salata", en: "House salad" }, price: 490, img: "fermata-salata.webp" },
+      { name: { tr: "Lahana salata", en: "Cabbage salad" }, price: 250, img: "lahana-salatasi.webp" },
+      { name: { tr: "Cacık", en: "Yoghurt, cucumber" }, price: 250, img: "cacik.webp" }
+    ]},
+    { id: "burger", name: { tr: "Burger", en: "Burgers" }, items: [
+      { name: { tr: "Fermata burger", en: "The house burger" }, price: 900, img: "fermata-burger.webp" },
+      { name: { tr: "Cheeseburger", en: "With cheese" }, price: 690, img: "cheeseburger.webp" },
+      { name: { tr: "Klasik burger", en: "Classic" }, price: 650, img: "klasik-burger.webp" },
+      { name: { tr: "Double burger", en: "Two patties" }, price: 780, img: "double-burger.webp" },
+      { name: { tr: "Tavuk burger", en: "Chicken" }, price: 590, img: "tavuk-burger.webp" }
+    ]},
+    { id: "pizza", name: { tr: "Pizza", en: "Pizza" }, sizes: { tr: ["Normal", "Büyük"], en: ["Regular", "Large"] }, items: [
+      { name: { tr: "Margarita", en: "Margherita" }, price: [500, 630], img: "margarita.webp" },
+      { name: { tr: "Pepperoni", en: "Pepperoni" }, price: [680, 790], img: "pepperoni.webp" },
+      { name: { tr: "Tavuklu pizza", en: "Chicken" }, price: [600, 720], img: "tavuklu-pizza.webp" },
+      { name: { tr: "Bacon'lı pizza", en: "Bacon" }, price: [750, 900], img: "baconli-pizza.webp" }
+    ]},
+    { id: "makarna", name: { tr: "Makarna & noodle", en: "Pasta & noodles" }, items: [
+      { name: { tr: "Alfredo", en: "Pasta alfredo" }, price: 630, img: "alfredo.webp" },
+      { name: { tr: "Arrabbiata", en: "Pasta arrabbiata" }, price: 490, img: "arrabbiata.webp" },
+      { name: { tr: "Tavuklu noodle", en: "Chicken noodles" }, price: 650, img: "tavuklu-noodle.webp" },
+      { name: { tr: "Sebzeli noodle", en: "Vegetable noodles" }, price: 530, img: "sebzeli-noodle.webp" },
+      { name: { tr: "Etli noodle", en: "Beef noodles" }, price: 780, img: "etli-noodle.webp" }
+    ]},
+    { id: "ana-yemek", name: { tr: "Ana yemek", en: "Mains" }, items: [
+      { name: { tr: "Lazanya", en: "Lasagne" }, price: 630, img: "lazanya.webp" },
+      { name: { tr: "Tavuk şinitzel", en: "Chicken schnitzel" }, price: 670, img: "tavuk-sinitzel.webp" },
+      { name: { tr: "Fırın tavuk", en: "Oven-roasted chicken" }, price: 610, img: "firin-tavuk.webp" },
+      { name: { tr: "Fırın levrek", en: "Oven-baked sea bass, 200 g" }, price: 940, img: "tandir.webp" },
+      { name: { tr: "Dana rosto", en: "Roast beef" }, price: 1100, img: "dana-rosto.webp" }
+    ]},
+    { id: "kizartma", name: { tr: "Kızartma", en: "From the fryer" }, items: [
+      { name: { tr: "Çıtır tavuk", en: "Crispy chicken" }, price: 655, img: "citir-tavuk.webp" },
+      { name: { tr: "Kalamar tava", en: "Fried calamari" }, price: 640, img: "kalamar.webp" },
+      { name: { tr: "Fish & chips", en: "Fish & chips" }, price: 890, img: "fish-chips.webp" },
+      { name: { tr: "Hot dog", en: "Hot dog" }, price: 720, img: "hot-dog.webp" },
+      { name: { tr: "Patates kızartması", en: "French fries" }, price: 255, img: "patates.webp" }
+    ]},
+    { id: "tatli", name: { tr: "Tatlı", en: "Desserts" }, items: [
+      { name: { tr: "Sufle", en: "Chocolate soufflé" }, price: 450, img: "sufle.webp" },
+      { name: { tr: "Brownie", en: "Brownie" }, price: 395, img: "brownie.webp" },
+      { name: { tr: "San Sebastian", en: "Basque cheesecake" }, price: 430, img: "san-sebastian.webp" },
+      { name: { tr: "Cookie", en: "Cookie" }, price: 285, img: "cookie.webp" }
+    ]},
+    { id: "icecek", name: { tr: "İçecek", en: "Drinks" }, compact: true, items: [
+      { name: { tr: "Soda", en: "Soda" }, note: "", price: 45, img: "" },
+      { name: { tr: "Sprite", en: "Sprite" }, note: "33 cl", price: 95, img: "" },
+      { name: { tr: "Lipton", en: "Lipton" }, note: "33 cl", price: 95, img: "" },
+      { name: { tr: "Zero", en: "Zero" }, note: "33 cl", price: 95, img: "" },
+      { name: { tr: "Cola", en: "Cola" }, note: "33 cl", price: 95, img: "" },
+      { name: { tr: "Fanta", en: "Fanta" }, note: "33 cl", price: 95, img: "" },
+      { name: { tr: "Red Bull", en: "Red Bull" }, note: "", price: 140, img: "" },
+      { name: { tr: "Ayran", en: "Ayran" }, note: "", price: 80, img: "" }
+    ]}
+  ]
+};
+/* ───── END MENU DATA ───── */
+
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+const num = n => n ? Number(n).toLocaleString("tr-TR") : "—";
+const other = l => l === "tr" ? "en" : "tr";
+const q = new URLSearchParams(location.search);
+let lang = (q.get("lang") || navigator.language || "tr").slice(0, 2) === "en" ? "en" : "tr";
+const flat = [];
+
+function priceHtml(i, sec){
+  const p = i.price;
+  if (Array.isArray(p)) {
+    const z = (i.sizes || sec.sizes)[lang];
+    return `<span class="price"><span class="pl">${esc(z[0])}</span>${num(p[0])}<span class="gap"></span><span class="pl">${esc(z[1])}</span>${num(p[1])}</span>`;
+  }
+  return `<span class="price">${num(p)}</span>`;
+}
+
+function render(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-t]").forEach(el => el.textContent = MENU.text[el.dataset.t][lang]);
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === lang));
+  document.getElementById("chips").innerHTML = MENU.sections.map(s => `<a href="#${s.id}">${esc(s.name[lang])}</a>`).join("");
+  flat.length = 0;
+  document.getElementById("menu").innerHTML = MENU.sections.map(s => `
+    <section id="${s.id}">
+      <h2 class="cat"><span>${esc(s.name[lang])}</span>${s.name.tr === s.name.en ? "" : `<span class="alt" lang="${other(lang)}">${esc(s.name[other(lang)])}</span>`}</h2>
+      <div class="items${s.compact ? " compact" : ""}">${s.items.map(i => {
+        const k = flat.push({ i, s }) - 1;
+        const sub = i.note ? `<span class="sub">${esc(i.note)}</span>` : i.name.tr === i.name.en ? "" : `<span class="sub" lang="en">${esc(i.name.en)}</span>`;
+        const pic = i.img ? `<button class="pic" type="button" data-k="${k}" aria-label="${esc(i.name.tr)}"><img src="img/thumb/${esc(i.img)}" alt="" loading="lazy" width="112" height="112" onerror="this.parentNode.remove()"></button>` : "";
+        if (s.compact) return `<div class="item"><div class="txt"><span class="name" lang="tr">${esc(i.name.tr)}</span>${sub}</div>${priceHtml(i, s)}</div>`;
+        return `<div class="item"><div class="txt"><span class="name" lang="tr">${esc(i.name.tr)}</span>${sub}${priceHtml(i, s)}</div>${pic}</div>`;
+      }).join("")}</div>
+    </section>`).join("");
+  spy();
+}
+
+const dlg = document.getElementById("photo");
+document.getElementById("menu").addEventListener("click", e => {
+  const b = e.target.closest("button.pic"); if (!b) return;
+  const { i, s } = flat[+b.dataset.k];
+  const img = document.getElementById("ph-img");
+  img.src = "img/" + i.img; img.alt = i.name.tr;
+  document.getElementById("ph-name").textContent = i.name.tr;
+  document.getElementById("ph-sub").textContent = i.name.tr === i.name.en ? "" : i.name.en;
+  document.getElementById("ph-price").innerHTML = priceHtml(i, s).replace(/^<span class="price">|<\/span>$/g, "");
+  dlg.showModal();
+});
+dlg.querySelector(".close").addEventListener("click", () => dlg.close());
+dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => { lang = b.dataset.l; render(); }));
+
+let io;
+function spy(){
+  if (io) io.disconnect();
+  const chips = [...document.querySelectorAll("#chips a")];
+  io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    chips.forEach(c => { const on = c.getAttribute("href") === "#" + e.target.id; c.classList.toggle("on", on); if (on) c.scrollIntoView({ inline: "center", block: "nearest" }); });
+  }), { rootMargin: "-70px 0px -60% 0px" });
+  document.querySelectorAll("main section").forEach(s => io.observe(s));
+}
+render();
+</script>
+</body>
+</html>
