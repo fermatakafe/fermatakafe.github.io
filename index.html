@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Fermata — Menü</title>
-<meta name="description" content="Fermata menüsü. Nurol Life, Sarıyer, İstanbul. Her gün 08.00 — 00.00.">
+<meta name="description" content="Fermata menüsü. Nurol Life, Sarıyer, İstanbul. Her gün 08.00 — 00.00. Tel: +90 540 170 46 46">
 <meta name="theme-color" content="#F5F0E6">
 <meta property="og:title" content="Fermata — Menü">
 <meta property="og:description" content="Nurol Life, Sarıyer · 08.00 — 00.00">
@@ -27,7 +27,10 @@
   header{position:relative;max-width:620px;margin:0 auto;padding:72px 20px 38px;text-align:center}
   .logo{display:block;width:232px;height:auto;margin:0 auto}
   .hours{margin-top:18px;font-size:13px;font-weight:400;letter-spacing:.28em;text-transform:uppercase}
-  .tag{margin-top:18px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:23px;color:var(--grey)}
+  .tel{display:inline-flex;align-items:center;min-height:44px;margin-top:6px;font-size:13px;font-weight:400;letter-spacing:.28em;color:var(--graphite);text-decoration:none}
+  .tel span{border-bottom:.5px solid var(--gold);padding-bottom:3px}
+  .tel:focus-visible{outline:1px solid var(--gold);outline-offset:2px}
+  .tag{margin-top:12px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:23px;color:var(--grey)}
   .lang{position:absolute;top:10px;right:8px;display:flex}
   .lang button{background:none;border:0;min-width:52px;min-height:48px;font:400 14px var(--sans);letter-spacing:.2em;color:var(--grey);cursor:pointer}
   .lang button[aria-pressed=true]{color:var(--graphite);text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:7px;text-decoration-thickness:1px}
@@ -48,6 +51,7 @@
   .sub{font-size:15.5px;line-height:1.4}
   .price{margin-top:5px;font-size:18px;font-variant-numeric:tabular-nums;letter-spacing:.02em}
   .price .pl{font-size:12px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--bronze);margin-right:6px}
+  .price .pl{white-space:nowrap}
   .price .gap{display:inline-block;width:20px}
   .pic{flex:none;width:148px;height:148px;padding:0;border:0;background:none;cursor:zoom-in;border-radius:50%}
   .pic img{width:100%;height:100%;object-fit:contain;display:block}
@@ -88,6 +92,7 @@
   </div>
   <img class="logo" src="assets/fermata-logo-graphite.svg" alt="Fermata" width="232" height="68">
   <div class="hours" lang="en">Nurol Life · 08.00 — 00.00</div>
+  <a class="tel" href="tel:+905401704646"><span>+90 540 170 46 46</span></a>
   <p class="tag" lang="en">Hold the note</p>
 </header>
 <nav aria-label="Menü"><div class="chips" id="chips"></div></nav>
@@ -95,6 +100,7 @@
 <footer>
   <p class="note" data-t="note"></p>
   <p class="addr" data-t="address"></p>
+  <p class="addr"><a href="tel:+905401704646">+90 540 170 46 46</a></p>
   <p class="addr"><a href="https://www.instagram.com/fermata.kafe/" rel="noopener">@fermata.kafe</a></p>
   <div class="hold" aria-hidden="true"><i></i><b></b></div>
 </footer>
@@ -124,74 +130,76 @@ const MENU = {
   },
   sections: [
     { id: "kahvalti", name: { tr: "Kahvaltı", en: "Breakfast" }, items: [
-      { name: { tr: "Kahvaltı tabağı", en: "Turkish breakfast" }, line: { tr: "Kaymak, bal, zeytin, tahin-pekmez, tereyağı, reçel, beyaz peynir, bacon, salam, domates, haşlanmış yumurta, yeşillik, sosis, kaşar peyniri, ızgara hellim, pişi", en: "Clotted cream, honey, olives, tahini & molasses, butter, jam, white cheese, bacon, salami, tomatoes, boiled egg, greens, sausage, kashar cheese, grilled halloumi, pişi" }, price: 620, feature: true, img: "kahvalti-tabagi.webp" },
-      { name: { tr: "Sahanda yumurta", en: "Fried eggs" }, line: { tr: "", en: "" }, price: 380, img: "sahanda-yumurta.webp" },
-      { name: { tr: "Domatesli omlet", en: "Tomato omelette" }, line: { tr: "", en: "" }, price: 430, img: "domatesli-omlet.webp" },
-      { name: { tr: "Ispanaklı omlet", en: "Spinach omelette" }, line: { tr: "", en: "" }, price: 450, img: "ispanakli-omlet.webp" },
-      { name: { tr: "Bacon'lı omlet", en: "Bacon omelette" }, line: { tr: "", en: "" }, price: 520, img: "baconli-omlet.webp" },
-      { name: { tr: "Pişi", en: "Pişi" }, line: { tr: "", en: "Turkish fried dough" }, price: [205, 350], sizes: { tr: ["2'li", "4'lü"], en: ["2 pcs", "4 pcs"] }, img: "pisi.webp" }
+      { name: { tr: "Kahvaltı tabağı", en: "Turkish breakfast" }, line: { tr: "Beyaz peynir, kaymak, tahin & pekmez, bal, reçel, zeytin, domates, yeşillik, haşlanmış yumurta, 2 adet sosis, tereyağı, hellim, kaşar peyniri, salam, bacon, pişi", en: "Clotted cream, honey, olives, tahini & molasses, butter, jam, white cheese, bacon, salami, tomatoes, boiled egg, greens, 2 sausages, kashar cheese, grilled halloumi, pişi" }, price: 715, feature: true, img: "kahvalti-tabagi.webp" },
+      { name: { tr: "Sahanda yumurta", en: "Fried eggs" }, line: { tr: "", en: "" }, price: 440, img: "sahanda-yumurta.webp" },
+      { name: { tr: "Domatesli omlet", en: "Tomato omelette" }, line: { tr: "Domates sos, yumurta, beyaz peynir (feta), kıyılmış fesleğen", en: "Tomato sauce, eggs, white cheese (feta), chopped basil" }, price: 495, img: "domatesli-omlet.webp" },
+      { name: { tr: "Ispanaklı omlet", en: "Spinach omelette" }, line: { tr: "Kavrulmuş soğan, ıspanak, yumurta", en: "Sautéed onion, spinach, eggs" }, price: 520, img: "ispanakli-omlet.webp" },
+      { name: { tr: "Bacon'lı omlet", en: "Bacon omelette" }, line: { tr: "Bacon, yumurta, maydanoz", en: "Bacon, eggs, parsley" }, price: 600, img: "baconli-omlet.webp" },
+      { name: { tr: "Pişi", en: "Pişi" }, line: { tr: "", en: "Turkish fried dough" }, price: [245, 405], sizes: { tr: ["2'li", "4'lü"], en: ["2 pcs", "4 pcs"] }, img: "pisi.webp" }
     ]},
     { id: "tost", name: { tr: "Tost", en: "Toasties" }, items: [
-      { name: { tr: "Kaşarlı tost", en: "Kashar cheese toastie" }, line: { tr: "", en: "" }, price: 380, img: "kasarli-tost.webp" },
-      { name: { tr: "Sucuklu tost", en: "Sucuk toastie" }, line: { tr: "", en: "" }, price: 455, img: "sucuklu-tost.webp" },
-      { name: { tr: "Peynirli tost", en: "White cheese toastie" }, line: { tr: "", en: "" }, price: 380, img: "peynirli-tost.webp" },
-      { name: { tr: "Bacon'lı tost", en: "Bacon toastie" }, line: { tr: "", en: "" }, price: 590, img: "baconli-tost.webp" }
+      { name: { tr: "Kaşarlı", en: "Kashar cheese" }, line: { tr: "Acuka, zeytin ezmesi, kaşar peyniri, kapari", en: "Acuka (pepper paste), olive paste, kashar cheese, capers" }, price: 440, img: "kasarli-tost.webp" },
+      { name: { tr: "Sucuklu", en: "Sucuk" }, line: { tr: "Sucuk, kaşar peyniri, labne peyniri", en: "Sucuk, kashar cheese, labneh" }, price: 530, img: "sucuklu-tost.webp" },
+      { name: { tr: "Peynirli", en: "White cheese" }, line: { tr: "Acuka, beyaz peynir, kapari, zeytin ezmesi", en: "Acuka (pepper paste), white cheese, capers, olive paste" }, price: 440, img: "peynirli-tost.webp" },
+      { name: { tr: "Bacon'lı", en: "Bacon" }, line: { tr: "Acuka, labne peyniri, bacon, kapari", en: "Acuka (pepper paste), labneh, bacon, capers" }, price: 685, img: "baconli-tost.webp" }
     ]},
     { id: "salata", name: { tr: "Salata", en: "Salads" }, items: [
-      { name: { tr: "Sezar salata", en: "Caesar salad" }, line: { tr: "", en: "" }, price: 670, img: "sezar.webp" },
-      { name: { tr: "Fermata salata", en: "Fermata salad" }, line: { tr: "", en: "House salad" }, price: 490, img: "fermata-salata.webp" },
-      { name: { tr: "Lahana salata", en: "Cabbage salad" }, line: { tr: "", en: "" }, price: 250, img: "lahana-salatasi.webp" },
-      { name: { tr: "Cacık", en: "Cacık" }, line: { tr: "", en: "Yoghurt, cucumber" }, price: 250, img: "cacik.webp" }
+      { name: { tr: "Sezar", en: "Caesar" }, line: { tr: "Marul, kruton, parmesan peyniri, sezar sos, tavuk göğsü", en: "Lettuce, croutons, parmesan, Caesar dressing, chicken breast" }, price: 780, img: "sezar.webp" },
+      { name: { tr: "Fermata", en: "Fermata" }, line: { tr: "Pancar, üzüm pekmezi sos, karamelize ceviz, beluga mercimeği, portakal dilimleri, karışık yeşillik, soğan turşusu", en: "Beetroot, grape molasses dressing, caramelised walnuts, beluga lentils, orange segments, mixed greens, pickled onion" }, price: 570, img: "fermata-salata.webp" },
+      { name: { tr: "Lahana", en: "Cabbage" }, line: { tr: "Beyaz lahana, havuç, mayonez", en: "White cabbage, carrot, mayonnaise" }, price: 290, img: "lahana-salatasi.webp" },
+      { name: { tr: "Cacık", en: "Cacık" }, line: { tr: "Süzme yoğurt, salatalık, çörek otu, kuru nane, zeytinyağı, limon kabuğu", en: "Strained yoghurt, cucumber, nigella seeds, dried mint, olive oil, lemon zest" }, price: 290, img: "cacik.webp" }
     ]},
     { id: "burger", name: { tr: "Burger", en: "Burgers" }, items: [
-      { name: { tr: "Fermata burger", en: "Fermata burger" }, line: { tr: "", en: "The house burger" }, price: 900, img: "fermata-burger.webp" },
-      { name: { tr: "Cheeseburger", en: "Cheeseburger" }, line: { tr: "", en: "" }, price: 690, img: "cheeseburger.webp" },
-      { name: { tr: "Klasik burger", en: "Classic burger" }, line: { tr: "", en: "" }, price: 650, img: "klasik-burger.webp" },
-      { name: { tr: "Double burger", en: "Double burger" }, line: { tr: "", en: "Two patties" }, price: 780, img: "double-burger.webp" },
-      { name: { tr: "Tavuk burger", en: "Chicken burger" }, line: { tr: "", en: "" }, price: 590, img: "tavuk-burger.webp" }
+      { name: { tr: "Fermata", en: "Fermata" }, line: { tr: "Rosto dana, burger köftesi, cheddar peyniri, salatalık turşusu, soğan turşusu, cheddar sos, karamelize soğan, lahana salatası, sweet chili sos", en: "Roast beef, beef patty, cheddar, pickles, pickled onion, cheddar sauce, caramelised onion, coleslaw, sweet chili sauce" }, price: 1035, img: "fermata-burger.webp" },
+      { name: { tr: "Klasik", en: "Classic" }, line: { tr: "Burger köftesi, cheddar peyniri, salatalık turşusu, soğan turşusu, karamelize soğan, cheddar sos", en: "Beef patty, cheddar, pickles, pickled onion, caramelised onion, cheddar sauce" }, price: 750, img: "klasik-burger.webp" },
+      { name: { tr: "Double", en: "Double" }, line: { tr: "Çift burger köftesi, cheddar peyniri, salatalık turşusu, soğan turşusu, karamelize soğan, cheddar sos, lahana salatası, sweet chili sos, tartar sos", en: "Two beef patties, cheddar, pickles, pickled onion, caramelised onion, cheddar sauce, coleslaw, sweet chili sauce, tartar sauce" }, price: 900, img: "double-burger.webp" },
+      { name: { tr: "Tavuk", en: "Chicken" }, line: { tr: "Çıtır tavuk but, cheddar peyniri, cheddar sos, lahana salatası, sweet chili sos, patates kızartması", en: "Crispy chicken thigh, cheddar, cheddar sauce, coleslaw, sweet chili sauce, fries" }, price: 685, img: "tavuk-burger.webp" }
     ]},
     { id: "pizza", name: { tr: "Pizza", en: "Pizza" }, sizes: { tr: ["Normal", "Büyük"], en: ["Regular", "Large"] }, items: [
-      { name: { tr: "Margarita", en: "Margherita" }, line: { tr: "", en: "" }, price: [500, 630], img: "margarita.webp" },
-      { name: { tr: "Pepperoni", en: "Pepperoni" }, line: { tr: "", en: "" }, price: [680, 790], img: "pepperoni.webp" },
-      { name: { tr: "Tavuklu pizza", en: "Chicken pizza" }, line: { tr: "", en: "" }, price: [600, 720], img: "tavuklu-pizza.webp" },
-      { name: { tr: "Bacon'lı pizza", en: "Bacon pizza" }, line: { tr: "", en: "" }, price: [750, 900], img: "baconli-pizza.webp" }
+      { name: { tr: "Margarita", en: "Margherita" }, line: { tr: "Domates sos, mozzarella peyniri, fesleğen", en: "Tomato sauce, mozzarella, basil" }, price: [580, 730], img: "margarita.webp" },
+      { name: { tr: "Pepperoni", en: "Pepperoni" }, line: { tr: "Pepperoni, mozzarella peyniri, domates sos, acı biber", en: "Pepperoni, mozzarella, tomato sauce, hot peppers" }, price: [790, 910], img: "pepperoni.webp" },
+      { name: { tr: "Tavuklu", en: "Chicken" }, line: { tr: "Tavuk, mozzarella peyniri, domates sos", en: "Chicken, mozzarella, tomato sauce" }, price: [690, 835], img: "tavuklu-pizza.webp" },
+      { name: { tr: "Bacon'lı", en: "Bacon" }, line: { tr: "Bacon, mozzarella peyniri, domates sos, acı biber", en: "Bacon, mozzarella, tomato sauce, hot peppers" }, price: [865, 1035], img: "baconli-pizza.webp" }
+    ]},
+    { id: "corba", name: { tr: "Çorba", en: "Soup" }, items: [
+      { name: { tr: "Günün çorbası", en: "Soup of the day" }, line: { tr: "Günün çorbasını ekibimize sorunuz", en: "Please ask our team about today's soup" }, price: 330, feature: true, img: "corba.webp" }
     ]},
     { id: "makarna", name: { tr: "Makarna & noodle", en: "Pasta & noodles" }, items: [
-      { name: { tr: "Alfredo", en: "Pasta alfredo" }, line: { tr: "", en: "" }, price: 630, img: "alfredo.webp" },
-      { name: { tr: "Arrabbiata", en: "Pasta arrabbiata" }, line: { tr: "", en: "" }, price: 490, img: "arrabbiata.webp" },
-      { name: { tr: "Tavuklu noodle", en: "Chicken noodles" }, line: { tr: "", en: "" }, price: 650, img: "tavuklu-noodle.webp" },
-      { name: { tr: "Sebzeli noodle", en: "Vegetable noodles" }, line: { tr: "", en: "" }, price: 530, img: "sebzeli-noodle.webp" },
-      { name: { tr: "Etli noodle", en: "Beef noodles" }, line: { tr: "", en: "" }, price: 780, img: "etli-noodle.webp" }
+      { name: { tr: "Alfredo", en: "Alfredo" }, line: { tr: "Penne, tavuk, mantar, krema sos, parmesan peyniri, kızarmış fesleğen", en: "Penne, chicken, mushrooms, cream sauce, parmesan, fried basil" }, price: 730, img: "alfredo.webp" },
+      { name: { tr: "Arrabbiata", en: "Arrabbiata" }, line: { tr: "Penne, domates sos, acı sos, parmesan peyniri, kızarmış çeri domates, taze fesleğen", en: "Penne, tomato sauce, chili sauce, parmesan, pan-fried cherry tomatoes, fresh basil" }, price: 570, img: "arrabbiata.webp" },
+      { name: { tr: "Tavuklu noodle", en: "Chicken noodles" }, line: { tr: "Noodle, tavuk, sebze, soya sos, taze soğan, kavrulmuş susam", en: "Noodles, chicken, vegetables, soy sauce, spring onion, toasted sesame" }, price: 750, img: "tavuklu-noodle.webp" },
+      { name: { tr: "Sebzeli noodle", en: "Vegetable noodles" }, line: { tr: "Noodle, sebze, soya sos, taze soğan, kavrulmuş susam", en: "Noodles, vegetables, soy sauce, spring onion, toasted sesame" }, price: 615, img: "sebzeli-noodle.webp" },
+      { name: { tr: "Etli noodle", en: "Beef noodles" }, line: { tr: "Noodle, dana eti, sebze, soya sos, taze soğan, kavrulmuş susam", en: "Noodles, beef, vegetables, soy sauce, spring onion, toasted sesame" }, price: 900, img: "etli-noodle.webp" }
     ]},
     { id: "ana-yemek", name: { tr: "Ana yemek", en: "Mains" }, items: [
-      { name: { tr: "Lazanya", en: "Lasagne" }, line: { tr: "", en: "" }, price: 630, img: "lazanya.webp" },
-      { name: { tr: "Tavuk şinitzel", en: "Chicken schnitzel" }, line: { tr: "", en: "" }, price: 670, img: "tavuk-sinitzel.webp" },
-      { name: { tr: "Fırın tavuk", en: "Oven-roasted chicken" }, line: { tr: "", en: "" }, price: 610, img: "firin-tavuk.webp" },
-      { name: { tr: "Fırın levrek", en: "Oven-baked sea bass" }, line: { tr: "200 g", en: "200 g" }, price: 940, img: "tandir.webp" },
-      { name: { tr: "Dana rosto", en: "Roast beef" }, line: { tr: "", en: "" }, price: 1100, img: "dana-rosto.webp" }
+      { name: { tr: "Lazanya", en: "Lasagne" }, line: { tr: "Bolonez sos, beşamel sos, lazanya yaprağı, parmesan peyniri, maydanoz", en: "Bolognese sauce, béchamel, lasagne sheets, parmesan, parsley" }, price: 730, img: "lazanya.webp" },
+      { name: { tr: "Şinitzel", en: "Schnitzel" }, line: { tr: "Pane tavuk, patates kızartması, roka salatası, soğan turşusu, lahana salatası, sweet chili sos", en: "Breaded chicken, fries, rocket salad, pickled onion, coleslaw, sweet chili sauce" }, price: 780, img: "tavuk-sinitzel.webp" },
+      { name: { tr: "Levrek", en: "Sea bass" }, line: { tr: "Tek fileto · 170 g levrek fileto, dereotlu pilav, limon sos, soğan turşusu", en: "Single fillet · 170 g sea bass fillet, dill rice, lemon sauce, pickled onion" }, price: 970, img: "tandir.webp" },
+      { name: { tr: "Levrek", en: "Sea bass" }, line: { tr: "Çift fileto · 340 g levrek fileto (2 adet), dereotlu pilav, limon sos, soğan turşusu", en: "Double fillet · 340 g sea bass fillet (2 fillets), dill rice, lemon sauce, pickled onion" }, price: 1420, img: "tandir-cift.webp" },
+      { name: { tr: "Dana rosto", en: "Roast beef" }, line: { tr: "Dana eti, mantar, krema, cheddar sos, patates kızartması, lahana salatası, sweet chili sos", en: "Beef, mushrooms, cream, cheddar sauce, fries, coleslaw, sweet chili sauce" }, price: 1265, img: "dana-rosto.webp" }
     ]},
     { id: "kizartma", name: { tr: "Kızartma", en: "From the fryer" }, items: [
-      { name: { tr: "Çıtır tavuk", en: "Crispy chicken" }, line: { tr: "", en: "" }, price: 655, img: "citir-tavuk.webp" },
-      { name: { tr: "Kalamar tava", en: "Fried calamari" }, line: { tr: "", en: "" }, price: 640, img: "kalamar.webp" },
-      { name: { tr: "Fish & chips", en: "Fish & chips" }, line: { tr: "", en: "" }, price: 890, img: "fish-chips.webp" },
-      { name: { tr: "Hot dog", en: "Hot dog" }, line: { tr: "", en: "" }, price: 720, img: "hot-dog.webp" },
-      { name: { tr: "Patates kızartması", en: "French fries" }, line: { tr: "", en: "" }, price: 255, img: "patates.webp" }
+      { name: { tr: "Çıtır tavuk", en: "Crispy chicken" }, line: { tr: "Çıtır tavuk, patates kızartması, lahana salatası, sweet chili sos, tartar sos", en: "Crispy chicken, fries, coleslaw, sweet chili sauce, tartar sauce" }, price: 760, img: "citir-tavuk.webp" },
+      { name: { tr: "Kalamar", en: "Calamari" }, line: { tr: "Kalamar, patates kızartması, tartar sos, sweet chili sos", en: "Calamari, fries, tartar sauce, sweet chili sauce" }, price: 740, img: "kalamar.webp" },
+      { name: { tr: "Fish & chips", en: "Fish & chips" }, line: { tr: "", en: "" }, price: 1025, img: "fish-chips.webp" },
+      { name: { tr: "Hot dog", en: "Hot dog" }, line: { tr: "Sosis, ekmek, patates kızartması, çıtır soğan", en: "Sausage, bun, fries, crispy onions" }, price: 835, img: "hot-dog.webp" },
+      { name: { tr: "Patates", en: "Fries" }, line: { tr: "Patates kızartması, lahana salatası, sweet chili sos", en: "Fries, coleslaw, sweet chili sauce" }, price: 300, img: "patates.webp" }
     ]},
     { id: "tatli", name: { tr: "Tatlı", en: "Desserts" }, items: [
-      { name: { tr: "Sufle", en: "Chocolate soufflé" }, line: { tr: "", en: "" }, price: 450, img: "sufle.webp" },
-      { name: { tr: "Brownie", en: "Brownie" }, line: { tr: "", en: "" }, price: 395, img: "brownie.webp" },
-      { name: { tr: "San Sebastian", en: "San Sebastian" }, line: { tr: "", en: "Basque cheesecake" }, price: 430, img: "san-sebastian.webp" },
-      { name: { tr: "Cookie", en: "Cookie" }, line: { tr: "", en: "" }, price: 285, img: "cookie.webp" }
+      { name: { tr: "Sufle", en: "Chocolate soufflé" }, line: { tr: "", en: "" }, price: 520, img: "sufle.webp" },
+      { name: { tr: "Brownie", en: "Brownie" }, line: { tr: "", en: "" }, price: 460, img: "brownie.webp" },
+      { name: { tr: "San Sebastian", en: "San Sebastian" }, line: { tr: "", en: "Basque cheesecake" }, price: 495, img: "san-sebastian.webp" },
+      { name: { tr: "Cookie", en: "Cookie" }, line: { tr: "", en: "" }, price: 330, img: "cookie.webp" }
     ]},
     { id: "icecek", name: { tr: "İçecek", en: "Drinks" }, compact: true, items: [
-      { name: { tr: "Soda", en: "Soda" }, note: "", price: 45, img: "" },
-      { name: { tr: "Sprite", en: "Sprite" }, note: "33 cl", price: 95, img: "" },
-      { name: { tr: "Lipton", en: "Lipton" }, note: "33 cl", price: 95, img: "" },
-      { name: { tr: "Zero", en: "Zero" }, note: "33 cl", price: 95, img: "" },
-      { name: { tr: "Cola", en: "Cola" }, note: "33 cl", price: 95, img: "" },
-      { name: { tr: "Fanta", en: "Fanta" }, note: "33 cl", price: 95, img: "" },
-      { name: { tr: "Red Bull", en: "Red Bull" }, note: "", price: 140, img: "" },
-      { name: { tr: "Ayran", en: "Ayran" }, note: "", price: 80, img: "" }
+      { name: { tr: "Soda", en: "Soda" }, note: "", price: 55, img: "" },
+      { name: { tr: "Sprite", en: "Sprite" }, note: "33 cl", price: 110, img: "" },
+      { name: { tr: "Lipton", en: "Lipton" }, note: "33 cl", price: 110, img: "" },
+      { name: { tr: "Zero", en: "Zero" }, note: "33 cl", price: 110, img: "" },
+      { name: { tr: "Cola", en: "Cola" }, note: "33 cl", price: 110, img: "" },
+      { name: { tr: "Fanta", en: "Fanta" }, note: "33 cl", price: 110, img: "" },
+      { name: { tr: "Red Bull", en: "Red Bull" }, note: "", price: 160, img: "" },
+      { name: { tr: "Ayran", en: "Ayran" }, note: "", price: 110, img: "" }
     ]}
   ]
 };
