@@ -144,10 +144,14 @@ const MENU = {
       { name: { tr: "Bacon'lı", en: "Bacon" }, line: { tr: "Acuka, labne peyniri, bacon, kapari", en: "Acuka (pepper paste), labneh, bacon, capers" }, price: 685, img: "baconli-tost.webp" }
     ]},
     { id: "salata", name: { tr: "Salata", en: "Salads" }, items: [
-      { name: { tr: "Sezar", en: "Caesar" }, line: { tr: "Marul, kruton, parmesan peyniri, sezar sos, tavuk göğsü", en: "Lettuce, croutons, parmesan, Caesar dressing, chicken breast" }, price: 780, img: "sezar.webp" },
+      { name: { tr: "Sezar", en: "Caesar" }, line: { tr: "Marul, kruton, parmesan peyniri, sezar sos; ızgara ya da çıtır tavuk göğsü", en: "Lettuce, croutons, parmesan, Caesar dressing; grilled or crispy chicken breast" }, price: 780, img: "sezar.webp" },
       { name: { tr: "Fermata", en: "Fermata" }, line: { tr: "Pancar, üzüm pekmezi sos, karamelize ceviz, beluga mercimeği, portakal dilimleri, karışık yeşillik, soğan turşusu", en: "Beetroot, grape molasses dressing, caramelised walnuts, beluga lentils, orange segments, mixed greens, pickled onion" }, price: 570, img: "fermata-salata.webp" },
       { name: { tr: "Lahana", en: "Cabbage" }, line: { tr: "Beyaz lahana, havuç, mayonez", en: "White cabbage, carrot, mayonnaise" }, price: 290, img: "lahana-salatasi.webp" },
       { name: { tr: "Cacık", en: "Cacık" }, line: { tr: "Süzme yoğurt, salatalık, çörek otu, kuru nane, zeytinyağı, limon kabuğu", en: "Strained yoghurt, cucumber, nigella seeds, dried mint, olive oil, lemon zest" }, price: 290, img: "cacik.webp" }
+    ]},
+    { id: "fit", name: { tr: "Fit bowl", en: "Fit bowls" }, items: [
+      { name: { tr: "Yeşil soslu tavuk", en: "Chicken with green sauce" }, line: { tr: "Tavuk, pilav, pancar, havuç, kabak, brokoli, mantar, kırmızı ve yeşil biber", en: "Chicken, rice, beetroot, carrot, courgette, broccoli, mushrooms, red and green peppers" }, price: 670, img: "fit-yesil-soslu.webp" },
+      { name: { tr: "Bal soslu tavuk", en: "Chicken with honey sauce" }, line: { tr: "Tavuk, pilav, pancar, havuç, kabak, brokoli, mantar, kırmızı ve yeşil biber", en: "Chicken, rice, beetroot, carrot, courgette, broccoli, mushrooms, red and green peppers" }, price: 670, img: "fit-bal-soslu.webp" }
     ]},
     { id: "burger", name: { tr: "Burger", en: "Burgers" }, items: [
       { name: { tr: "Fermata", en: "Fermata" }, line: { tr: "Rosto dana, burger köftesi, cheddar peyniri, salatalık turşusu, soğan turşusu, cheddar sos, karamelize soğan, lahana salatası, sweet chili sos", en: "Roast beef, beef patty, cheddar, pickles, pickled onion, cheddar sauce, caramelised onion, coleslaw, sweet chili sauce" }, price: 1035, img: "fermata-burger.webp" },
@@ -174,9 +178,8 @@ const MENU = {
     { id: "ana-yemek", name: { tr: "Ana yemek", en: "Mains" }, items: [
       { name: { tr: "Lazanya", en: "Lasagne" }, line: { tr: "Bolonez sos, beşamel sos, lazanya yaprağı, parmesan peyniri, maydanoz", en: "Bolognese sauce, béchamel, lasagne sheets, parmesan, parsley" }, price: 730, img: "lazanya.webp" },
       { name: { tr: "Şinitzel", en: "Schnitzel" }, line: { tr: "Pane tavuk, patates kızartması, roka salatası, soğan turşusu, lahana salatası, sweet chili sos", en: "Breaded chicken, fries, rocket salad, pickled onion, coleslaw, sweet chili sauce" }, price: 780, img: "tavuk-sinitzel.webp" },
-      { name: { tr: "Levrek", en: "Sea bass" }, line: { tr: "Tek fileto · 170 g levrek fileto, dereotlu pilav, limon sos, soğan turşusu", en: "Single fillet · 170 g sea bass fillet, dill rice, lemon sauce, pickled onion" }, price: 970, img: "tandir.webp" },
-      { name: { tr: "Levrek", en: "Sea bass" }, line: { tr: "Çift fileto · 340 g levrek fileto (2 adet), dereotlu pilav, limon sos, soğan turşusu", en: "Double fillet · 340 g sea bass fillet (2 fillets), dill rice, lemon sauce, pickled onion" }, price: 1420, img: "tandir-cift.webp" },
-      { name: { tr: "Dana rosto", en: "Roast beef" }, line: { tr: "Dana eti, mantar, krema, cheddar sos, patates kızartması, lahana salatası, sweet chili sos", en: "Beef, mushrooms, cream, cheddar sauce, fries, coleslaw, sweet chili sauce" }, price: 1265, img: "dana-rosto.webp" }
+      { name: { tr: "Levrek", en: "Sea bass" }, line: { tr: "Tek fileto · 170 g levrek fileto, dereotlu pilav, limon sos, soğan turşusu", en: "Single fillet · 170 g sea bass fillet, dill rice, lemon sauce, pickled onion" }, price: 850, img: "tandir.webp" },
+      { name: { tr: "Levrek", en: "Sea bass" }, line: { tr: "Çift fileto · 340 g levrek fileto (2 adet), dereotlu pilav, limon sos, soğan turşusu", en: "Double fillet · 340 g sea bass fillet (2 fillets), dill rice, lemon sauce, pickled onion" }, price: 1250, img: "tandir-cift.webp" }
     ]},
     { id: "kizartma", name: { tr: "Kızartma", en: "From the fryer" }, items: [
       { name: { tr: "Çıtır tavuk", en: "Crispy chicken" }, line: { tr: "Çıtır tavuk, patates kızartması, lahana salatası, sweet chili sos, tartar sos", en: "Crispy chicken, fries, coleslaw, sweet chili sauce, tartar sauce" }, price: 760, img: "citir-tavuk.webp" },
