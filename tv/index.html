@@ -566,8 +566,10 @@ setInterval(function(){
 /* ════════════════ sound unlock ════════════════ */
 function showHint(){ S.unlocked = false; $("hint").textContent = T(TXT.hint); $("hint").classList.add("show"); }
 function setUnlocked(){ S.unlocked = true; $("hint").classList.remove("show"); }
-var fsTried = false;
+var IN_APP = /[?&]app=1/.test(location.search);   // opened by the Fermata TV app, which is already full screen
+var fsTried = IN_APP;
 function goFullscreen(){ // only allowed from a key press; the TV browser otherwise keeps its address bar
+  if (IN_APP) return;
   fsTried = true;
   var d = document.documentElement, f = d.requestFullscreen || d.webkitRequestFullscreen || d.webkitRequestFullScreen;
   if (f && !(document.fullscreenElement || document.webkitFullscreenElement)) try { var p = f.call(d); if (p && p["catch"]) p["catch"](function(){}); } catch(e){}
