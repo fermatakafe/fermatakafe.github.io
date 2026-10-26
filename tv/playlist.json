@@ -9,8 +9,8 @@
     "imgBase": "media/menu/",
     "imgMap": { "tandir-cift.webp": "tandir.jpg" },
     "seconds": 9,
-    "showSeconds": 45,
-    "everySeconds": 180
+    "showSeconds": 40,
+    "everySeconds": 480
   },
   "youtubeApiKey": "AIzaSyBr3DjZYjIAppRVnSmkZ3_2wmPAMxmvA0w",
   "library": [
