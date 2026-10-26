@@ -289,6 +289,8 @@ var CONFIG = {
   langSeconds: 14,            // TR ⇄ EN swap; never both on screen
   dockIdleSeconds: 7,         // expanded player dock folds back after this
   glass: "high",              // "high" = real blur, "lite" = solid tint for slow TVs
+  ytHost: "https://www.youtube.com",   // carries the TV's YouTube sign-in, so a Premium account plays without ads;
+                                       // "https://www.youtube-nocookie.com" = privacy mode, never signed in
   cafe: {
     hours: "08.00 — 00.00",
     qrs: [
@@ -405,7 +407,7 @@ var Synth = {
   }
 };
 
-/* ════════════════ YouTube (IFrame Player API, youtube-nocookie) ════════════════ */
+/* ════════════════ YouTube (IFrame Player API) ════════════════ */
 var YTP = { player:null, ready:false, loading:false, cbs:[], errors:0, apTimer:null };
 function loadYT(cb){
   if (window.YT && YT.Player){ cb(); return; }
@@ -419,7 +421,7 @@ function createPlayer(done){
   var pv = { autoplay:1, controls:0, disablekb:1, fs:0, iv_load_policy:3, modestbranding:1, playsinline:1, rel:0, cc_load_policy:0,
              mute: CONFIG.tryUnmutedAutoplay ? 0 : 1 };
   if (location.protocol !== "file:") pv.origin = location.origin;
-  YTP.player = new YT.Player("yt", { host:"https://www.youtube-nocookie.com", width:"100%", height:"100%", playerVars:pv,
+  YTP.player = new YT.Player("yt", { host:CONFIG.ytHost, width:"100%", height:"100%", playerVars:pv,
     events:{ onReady:function(){ YTP.ready = true; done(); }, onStateChange:onYTState, onError:onYTError } });
 }
 function startYouTube(){
@@ -846,7 +848,7 @@ setInterval(function(){ var d = new Date(); if (d.getHours()===7 && d.getMinutes
 /* ════════════════ playlist.json ════════════════ */
 var lastJSON = "";
 function merge(j){
-  ["autoSchedule","tryUnmutedAutoplay","volume","langSeconds","dockIdleSeconds","glass"].forEach(function(k){ if (j[k] !== undefined) CONFIG[k] = j[k]; });
+  ["autoSchedule","tryUnmutedAutoplay","volume","langSeconds","dockIdleSeconds","glass","ytHost"].forEach(function(k){ if (j[k] !== undefined) CONFIG[k] = j[k]; });
   if (j.special) CONFIG.special = j.special;
   if (j.menu) for (var mk in j.menu) CONFIG.menu[mk] = j.menu[mk];
   MC.slides = null;
