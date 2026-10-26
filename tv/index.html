@@ -91,7 +91,8 @@
   #dock.noprog .progRow{display:none}
   .swap{transition:opacity .8s}
   .swap.out{opacity:0}
-  .logo{position:absolute;left:96px;top:70px;height:96px;filter:drop-shadow(0 2px 14px rgba(0,0,0,.35))}
+  /* no CSS filter here: Samsung TVs draw video on a hardware plane and drop filtered layers behind it */
+  .logo{position:absolute;left:96px;top:70px;height:96px}
   .logoText{position:absolute;left:96px;top:78px;font-family:var(--serif);font-size:64px;letter-spacing:.3em;font-weight:500}
 
   .clockPill{position:absolute;right:96px;top:72px;height:84px;border-radius:42px;padding:0 36px;display:flex;align-items:center}
@@ -565,7 +566,14 @@ setInterval(function(){
 /* ════════════════ sound unlock ════════════════ */
 function showHint(){ S.unlocked = false; $("hint").textContent = T(TXT.hint); $("hint").classList.add("show"); }
 function setUnlocked(){ S.unlocked = true; $("hint").classList.remove("show"); }
+var fsTried = false;
+function goFullscreen(){ // only allowed from a key press; the TV browser otherwise keeps its address bar
+  fsTried = true;
+  var d = document.documentElement, f = d.requestFullscreen || d.webkitRequestFullscreen || d.webkitRequestFullScreen;
+  if (f && !(document.fullscreenElement || document.webkitFullscreenElement)) try { var p = f.call(d); if (p && p["catch"]) p["catch"](function(){}); } catch(e){}
+}
 function unlock(){
+  goFullscreen();
   if (Synth.ctx && Synth.ctx.state !== "running") Synth.ctx.resume();
   if (S.playing && S.mode === "file"){ var p = aud.play(); if (p && p["catch"]) p["catch"](function(){}); }
   if (S.playing && S.mode !== "yt" && (chan().videos||[]).length){ var q = vid.play(); if (q && q["catch"]) q["catch"](function(){}); }
@@ -796,7 +804,9 @@ document.addEventListener("keydown", function(e){
     e.preventDefault(); return;
   }
   switch(k){
-    case 13: case 32: case 10252: setPlaying(!S.playing); break;
+    case 13: case 32: case 10252:
+      if (!fsTried && !(document.fullscreenElement || document.webkitFullscreenElement)){ goFullscreen(); break; }
+      setPlaying(!S.playing); break;
     case 37: case 412: case 10232: case 80: step(-1); wakeDock(); break;
     case 39: case 417: case 10233: case 78:  step(1);  wakeDock(); break;
     case 38: openMenu(); break;
