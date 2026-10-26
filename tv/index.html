@@ -198,6 +198,7 @@
   #toast{top:72px;height:84px;border-radius:42px;padding:0 40px;display:flex;align-items:center;font-family:var(--serif);font-size:38px}
   #hint{top:190px;border-radius:999px;padding:18px 36px;background:var(--gold);color:var(--graphite);font-size:24px;font-weight:500;letter-spacing:.06em;box-shadow:0 14px 40px rgba(0,0,0,.35)}
   #paused{top:50%;margin-top:-90px;border-radius:44px;padding:36px 64px;text-align:center}
+  #stage.overlaid #paused, #stage.overlaid #hint{opacity:0}   /* never on top of an open menu or library */
   #paused .pt{font-family:var(--serif);font-size:56px}
   #paused small{display:block;font-size:20px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:10px}
 
@@ -708,6 +709,7 @@ function renderTexts(){
   if ($("hint").classList.contains("show")) $("hint").textContent = T(TXT.hint);
   $("qrCap").textContent = T(((CONFIG.cafe.qrs||[])[qrIdx] || {}).caption);
   updateNow(); buildTiles();
+  if (LIB.open) renderLib();   // the library must follow the same language as everything else
 }
 function swapLang(){
   if (LIB.open) return;   // hold one language while staff are browsing
@@ -833,8 +835,8 @@ function buildTiles(){
     wrap.appendChild(d);
   });
 }
-function openMenu(){ $("ui").classList.add("dim"); S.menuOpen = true; S.focus = S.override ? S.ch+1 : 0; buildTiles(); $("menu").classList.add("open"); }
-function closeMenu(){ $("ui").classList.remove("dim"); S.menuOpen = false; $("menu").classList.remove("open"); }
+function openMenu(){ $("ui").classList.add("dim"); $("stage").classList.add("overlaid"); S.menuOpen = true; S.focus = S.override ? S.ch+1 : 0; buildTiles(); $("menu").classList.add("open"); }
+function closeMenu(){ $("ui").classList.remove("dim"); $("stage").classList.remove("overlaid"); S.menuOpen = false; $("menu").classList.remove("open"); }
 function moveFocus(d){ var n = menuItems().length; S.focus = (S.focus+d+n) % n; buildTiles(); }
 function selectFocus(){
   if ((menuItems()[S.focus] || {}).lib){ closeMenu(); openLib(); return; }
@@ -850,7 +852,7 @@ var KEYROWS = [["a","b","c","ç","d","e","f","g","ğ","h"], ["ı","i","j","k","l
                ["9","0"," ","del","go"]];
 var LASTROW_AT = [0, 1, 2, 5, 7];   // visual column where each last-row key starts (space is 3 wide, ⌫ and Ara 2)
 var ROWH = 246;                     // card height + bottom margin
-var LIB = { open:false, zone:"cats", cat:0, gi:0, kr:0, kc:0, query:"", results:null, busy:false };
+var LIB = { open:false, zone:"cats", cat:0, gi:0, kr:0, kc:0, query:"", results:null, busy:false, typed:false };
 
 function libCats(){
   var c = []; if (CONFIG.youtubeApiKey) c.push({ search:true, name:TXT.search });
@@ -865,9 +867,9 @@ function showingKeys(){ var c = libCats()[LIB.cat] || {}; return !!c.search && (
 function openLib(){
   if (LIB.cat >= libCats().length) LIB.cat = 0;
   LIB.open = true; LIB.zone = "cats"; LIB.gi = 0;
-  $("ui").classList.add("dim"); renderLib(); $("lib").classList.add("open");
+  $("ui").classList.add("dim"); $("stage").classList.add("overlaid"); renderLib(); $("lib").classList.add("open");
 }
-function closeLib(){ LIB.open = false; $("lib").classList.remove("open"); $("ui").classList.remove("dim"); }
+function closeLib(){ LIB.open = false; $("lib").classList.remove("open"); $("ui").classList.remove("dim"); $("stage").classList.remove("overlaid"); }
 function nowId(){ if (S.mode !== "yt" || !YTP.ready) return ""; try { return (YTP.player.getVideoData() || {}).video_id || ""; } catch(e){ return ""; } }
 
 function renderLib(){
@@ -875,7 +877,7 @@ function renderLib(){
   $("libTitle").textContent = T(TXT.library);
   $("libKeys").textContent = T(TXT.libKeys);
   $("libCats").innerHTML = cats.map(function(c, i){
-    return '<div class="cat'+(i===LIB.cat ? ' sel' : '')+(i===LIB.cat && LIB.zone==="cats" ? ' focus' : '')+'">'+
+    return '<div class="cat'+(i===LIB.cat ? ' sel' : '')+(i===LIB.cat && LIB.zone==="cats" ? ' focus' : '')+'" data-cat="'+i+'">'+
            (c.search ? '⌕&nbsp; ' : '')+esc(T(c.name))+'</div>';
   }).join("");
   var keys = showingKeys();
@@ -888,10 +890,10 @@ function renderGrid(){
   if (!items.length){ g.innerHTML = '<div class="libEmpty">'+esc(T(TXT.noResults))+'</div>'; g.style.transform = ""; return; }
   g.innerHTML = items.map(function(it, i){
     var cls = "card2" + (LIB.zone==="grid" && i===LIB.gi ? " focus" : "") + (it.id && it.id === now ? " now" : "");
-    if (it.newSearch) return '<div class="'+cls+'"><div class="th kbd">⌕</div><div class="tt">'+esc(T(TXT.newSearch))+
+    if (it.newSearch) return '<div class="'+cls+'" data-gi="'+i+'"><div class="th kbd">⌕</div><div class="tt">'+esc(T(TXT.newSearch))+
                              (LIB.query ? ' · “'+esc(LIB.query)+'”' : '')+'</div></div>';
     var img = it.thumb || (it.id ? "https://i.ytimg.com/vi/"+it.id+"/mqdefault.jpg" : PICTO);
-    return '<div class="'+cls+'"><div class="th"><img alt="" src="'+esc(img)+'">'+
+    return '<div class="'+cls+'" data-gi="'+i+'"><div class="th"><img alt="" src="'+esc(img)+'">'+
            (it.playlist ? '<span class="badge">'+esc(T(TXT.list))+'</span>' : '')+'</div><div class="tt">'+esc(it.title || "")+'</div></div>';
   }).join("");
   var first = LIB.zone === "grid" ? Math.max(0, Math.floor(LIB.gi/4) - 1) : 0;   // keep the focused row in view
@@ -905,7 +907,7 @@ function renderKeys(){
       var lab = k === " " ? T(TXT.space) : k === "del" ? "⌫" : k === "go" ? T(TXT.search) : k;
       var cls = "key" + (k === " " ? " wide" : "") + (k === "del" || k === "go" ? " mid" : "") + (k === "go" ? " go" : "") +
                 (LIB.zone === "keys" && r === LIB.kr && c === LIB.kc ? " focus" : "");
-      return '<div class="'+cls+'">'+esc(lab)+'</div>';
+      return '<div class="'+cls+'" data-kr="'+r+'" data-kc="'+c+'">'+esc(lab)+'</div>';
     }).join("") + '</div>';
   }).join("");
 }
@@ -933,9 +935,14 @@ function doSearch(){
       var th = x.snippet.thumbnails || {};
       return { id:x.id.videoId, title:decode(x.snippet.title), thumb:(th.medium || th["default"] || {}).url };
     });
-    LIB.busy = false; LIB.zone = "grid"; LIB.gi = LIB.results.length ? 1 : 0;
+    LIB.busy = false;
+    if ((libCats()[LIB.cat] || {}).search){ LIB.zone = "grid"; LIB.gi = LIB.results.length ? 1 : 0; }   // only if still on Ara
     if (LIB.open) renderLib();
-  })["catch"](function(err){ console.warn("search:", err); LIB.busy = false; toast(T(TXT.searchFail), 4000); if (LIB.open) renderLib(); });
+  })["catch"](function(err){
+    console.warn("search:", err); LIB.busy = false;
+    toast(T(TXT.searchFail) + (err && err.message ? " · " + String(err.message).slice(0, 80) : ""), 6000);
+    if (LIB.open) renderLib();
+  });
 }
 function playPick(it){
   var base = CH()[S.ch];
@@ -960,7 +967,7 @@ function libKey(e){ // returns true when the key was used
     items = libItems(); n = items.length;
     if (k === 37){ if (LIB.gi % 4 === 0) LIB.zone = "cats"; else LIB.gi--; }
     else if (k === 39){ if (LIB.gi % 4 < 3 && LIB.gi < n-1) LIB.gi++; }
-    else if (k === 38){ if (LIB.gi >= 4) LIB.gi -= 4; }
+    else if (k === 38){ if (LIB.gi >= 4) LIB.gi -= 4; else if ((cats[LIB.cat] || {}).search) LIB.zone = "keys"; }
     else if (k === 40){ if (LIB.gi + 4 < n) LIB.gi += 4; else if (Math.floor(LIB.gi/4) < Math.floor((n-1)/4)) LIB.gi = n-1; }
     else if (k === 13){
       var it = items[LIB.gi]; if (!it) return true;
@@ -970,6 +977,7 @@ function libKey(e){ // returns true when the key was used
     else return false;
   } else { // on-screen keyboard
     var row = KEYROWS[LIB.kr];
+    if (k >= 37 && k <= 40) LIB.typed = false;   // arrows = remote style; Enter then presses the focused key
     if (k === 37){ if (LIB.kc === 0) LIB.zone = "cats"; else LIB.kc--; }
     else if (k === 39){ if (LIB.kc < row.length-1) LIB.kc++; }
     else if (k === 38 || k === 40){
@@ -977,13 +985,38 @@ function libKey(e){ // returns true when the key was used
       if (r >= 0 && r < KEYROWS.length){ LIB.kc = colAt(r, vcol(LIB.kr, LIB.kc)); LIB.kr = r; }
       else if (k === 40 && LIB.results){ LIB.zone = "grid"; LIB.gi = 0; }
     }
-    else if (k === 13) { pressKey(row[LIB.kc]); return true; }
+    else if (k === 13){ if (LIB.typed) doSearch(); else pressKey(row[LIB.kc]); return true; }   // laptop Enter after typing = search
     else if (k === 8) { pressKey("del"); return true; }
-    else if (e.key && e.key.length === 1 && /[0-9a-zçğıöşüi ]/i.test(e.key)){ pressKey(e.key.toLowerCase()); return true; }
+    else if (e.key && e.key.length === 1){
+      var ch = e.key === "I" ? "ı" : e.key === "İ" ? "i" : e.key.toLowerCase();   // Turkish dotted/dotless i
+      if (!/[0-9a-zçğıöşü ]/.test(ch)) return false;
+      LIB.typed = true; pressKey(ch); return true;
+    }
     else return false;
   }
   renderLib(); return true;
 }
+
+// mouse / touch (laptop, touchscreen): click a mood, a card or a key; click the dark backdrop to close
+function libTarget(el){
+  for (; el && el !== $("lib"); el = el.parentNode){
+    if (!el.getAttribute) continue;
+    if (el.getAttribute("data-cat") !== null || el.getAttribute("data-gi") !== null || el.getAttribute("data-kr") !== null) return el;
+    if (/\blibSheet\b/.test(el.className)) return el;
+  }
+  return null;
+}
+$("lib").addEventListener("click", function(e){
+  e.stopPropagation();
+  var t = libTarget(e.target), a;
+  if (!t){ closeLib(); return; }
+  if ((a = t.getAttribute("data-cat")) !== null){ LIB.cat = +a; LIB.gi = 0; LIB.zone = "cats"; libKey({ keyCode:39 }); return; }
+  if ((a = t.getAttribute("data-gi")) !== null){ LIB.zone = "grid"; LIB.gi = +a; libKey({ keyCode:13 }); return; }
+  if ((a = t.getAttribute("data-kr")) !== null){
+    LIB.zone = "keys"; LIB.kr = +a; LIB.kc = +t.getAttribute("data-kc"); LIB.typed = false;
+    pressKey(KEYROWS[LIB.kr][LIB.kc]); renderLib();
+  }
+});
 
 /* ════════════════ toast ════════════════ */
 var toastT;
