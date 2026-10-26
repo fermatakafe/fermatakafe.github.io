@@ -12,7 +12,7 @@
     "showSeconds": 45,
     "everySeconds": 180
   },
-  "youtubeApiKey": "",
+  "youtubeApiKey": "AIzaSyBr3DjZYjIAppRVnSmkZ3_2wmPAMxmvA0w",
   "library": [
     { "name": { "tr": "Sabah kahvesi", "en": "Morning coffee" }, "items": [
       { "id": "RA3pcxaCkhg", "title": "Relaxing Bossa Nova for Your Morning Coffee" },
