@@ -12,6 +12,61 @@
     "showSeconds": 45,
     "everySeconds": 180
   },
+  "youtubeApiKey": "",
+  "library": [
+    { "name": { "tr": "Sabah kahvesi", "en": "Morning coffee" }, "items": [
+      { "id": "RA3pcxaCkhg", "title": "Relaxing Bossa Nova for Your Morning Coffee" },
+      { "id": "FxzV5hha0HI", "title": "Cozy October Jazz – Bossa Nova Coffee Music" },
+      { "id": "1sH8ZOokw1c", "title": "Morning Coffee Jazz – Piano & Sweet Bossa Nova" },
+      { "id": "e6KzjUOfmBk", "title": "Morning Coffee Music – Jazz & Bossa Café" },
+      { "id": "LHqPQuINuMg", "title": "Gentle Morning Jazz – Cozy Spring Café" },
+      { "id": "x6c-lgeA15k", "title": "Quiet Morning Café Jazz – 1940s Home Café" },
+      { "id": "8cN7LWGO-gE", "title": "Positive Jazz – Morning Music" }
+    ]},
+    { "name": { "tr": "Bossa nova", "en": "Bossa nova" }, "items": [
+      { "id": "VT9jQKQjwCY", "title": "Chill Bossa Nova Jazz – Coffee Shop" },
+      { "id": "EAm-TmNVnUY", "title": "Autumn Bossa Nova Jazz – Cozy Café" },
+      { "id": "wJ6r_xSlmQk", "title": "October Bossa Nova Jazz – Sweet Evening" },
+      { "id": "G6gRMc6v0mI", "title": "Smooth Bossa Nova Jazz in a Coffee Shop" },
+      { "id": "d8IX0fYGsjA", "title": "Bossa Nova Chill & Focus – 2 hours" },
+      { "id": "opTGVhIyjYQ", "title": "Bossa Nova Covers of Popular Songs" },
+      { "id": "1B-BW28iNsc", "title": "Jazz Bossa Nova Mix" }
+    ]},
+    { "name": { "tr": "Caz & piyano", "en": "Jazz & piano" }, "items": [
+      { "id": "MYPVQccHhAQ", "title": "Cozy Coffee Shop – Smooth Piano Jazz (4K)" },
+      { "id": "ehtkxGI8vsU", "title": "Night Jazz – Exquisite Piano" },
+      { "id": "QeCG0pTQUgo", "title": "Evening Lounge Jazz" },
+      { "id": "8w5ELqXNlvk", "title": "Late Night Jazz Lounge – Jazz Bar Classics" },
+      { "id": "p8yHhCclSDI", "title": "Night Jazz – Peaceful Evening" },
+      { "id": "U3n31M81RpE", "title": "Smooth Jazz Saxophone – Cool Café Vibes" },
+      { "id": "mK3IPQUzQUU", "title": "Smooth Jazz – Soul R&B Lounge" }
+    ]},
+    { "name": { "tr": "Lounge", "en": "Lounge" }, "items": [
+      { "id": "6ysKXydT8xY", "title": "Rooftop Lounge – Cool Music" },
+      { "id": "l8y9miahT60", "title": "Elegant Chillout Lounge – Classy Evening" },
+      { "id": "skHI4Zi-CBA", "title": "Luxury Chillout Lounge – Evening Vibes" },
+      { "id": "DZ6cBvKP7zA", "title": "Luxury Chillout Lounge – Upscale Evenings" },
+      { "id": "HZEJKoBCSi4", "title": "Deep Rooftop Chillout" },
+      { "id": "06SY7GJ_ll8", "title": "Sunset Lounge & Rooftop Vibes" },
+      { "id": "TXujtqwAg-Q", "title": "Rooftop Lounge – Deep & Progressive House" },
+      { "id": "Ha7KlHKvc8E", "title": "Restaurant Music – Jazz, Bossa, Lounge (20 h)" }
+    ]},
+    { "name": { "tr": "Neo soul & groove", "en": "Neo soul & groove" }, "items": [
+      { "id": "vR_MUd-WSZs", "title": "Groovy Jazz Hip Hop – Smooth Neo Soul" },
+      { "id": "Nq5GrPgCZrM", "title": "Smooth Jazz Hip Hop & Neo Soul" },
+      { "id": "fUW0XWn1Gsk", "title": "Feel the Flow – Neo Soul & Jazz Hip Hop" },
+      { "id": "P8drjX1ER3Y", "title": "Neo Soul / Jazzy Relaxing Beats" },
+      { "id": "eHE_odJq8uU", "title": "Neo Soul Instrumental – 2 h 30" },
+      { "id": "qsiv3oAsccY", "title": "Neo-Soul & Jazzy R&B Lo-Fi" },
+      { "id": "xpdohtmAgSI", "title": "Funky Soul Classics" }
+    ]},
+    { "name": { "tr": "İtalyan akşamı", "en": "Italian evening" }, "items": [
+      { "id": "5dKDbYQOo30", "title": "Italian Chill Funk – Aperitivo Mood" },
+      { "id": "asAmkRtB73k", "title": "Luxury Lounge Bar – Italian Riviera Evening" },
+      { "id": "Q0Z5QxVtCYQ", "title": "Aperitivo Hour – Skyline Deep House" },
+      { "id": "zAd5dMNYOJ8", "title": "Italian Vibes – Amalfi Coast & Lake Como (11 h)" }
+    ]}
+  ],
   "cafe": {
     "hours": "08.00 — 00.00",
     "qrs": [

@@ -183,7 +183,7 @@
   #menu.open .sheet{transform:none}
   .sheet h2{font-family:var(--serif);font-weight:500;font-size:54px;letter-spacing:.18em;margin:0 0 44px}
   .tiles{display:flex}
-  .tile{width:270px;height:210px;border-radius:30px;padding:26px;box-sizing:border-box;text-align:left;
+  .tile{width:240px;height:210px;border-radius:30px;padding:26px;box-sizing:border-box;text-align:left;
     display:flex;flex-direction:column;justify-content:space-between;transition:transform .25s,box-shadow .25s;cursor:pointer}
   .tile .dot{width:46px;height:46px;border-radius:50%;background:linear-gradient(140deg,var(--t1),var(--t2));box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
   .tile .tn{font-family:var(--serif);font-size:34px;line-height:1.05}
@@ -200,6 +200,42 @@
   #paused{top:50%;margin-top:-90px;border-radius:44px;padding:36px 64px;text-align:center}
   #paused .pt{font-family:var(--serif);font-size:56px}
   #paused small{display:block;font-size:20px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+
+  /* ── Music library & search ──────────────────────────────────────────── */
+  #lib{position:absolute;top:0;right:0;bottom:0;left:0;background:rgba(15,14,12,.55);opacity:0;pointer-events:none;transition:opacity .4s}
+  #lib.open{opacity:1;pointer-events:auto}
+  .libSheet{position:absolute;left:120px;top:56px;width:1680px;height:968px;border-radius:48px;overflow:hidden}
+  .libHead{position:absolute;left:60px;right:60px;top:44px;height:70px}
+  .libHead h2{position:absolute;left:0;top:0;margin:0;font-family:var(--serif);font-weight:500;font-size:52px;letter-spacing:.14em}
+  .libKeys{position:absolute;right:0;top:22px;font-size:18px;color:var(--muted);letter-spacing:.1em}
+  .cats{position:absolute;left:44px;top:150px;width:310px;bottom:48px}
+  .cat{height:64px;line-height:64px;padding:0 22px;border-radius:32px;margin-bottom:10px;font-size:19px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cat.sel{color:var(--ink);background:rgba(245,240,230,.10)}
+  .cat.focus{box-shadow:0 0 0 3px var(--gold);color:var(--ink)}
+  .libMain{position:absolute;left:392px;width:1228px;top:150px;bottom:40px;overflow:hidden}
+  .libGrid{position:absolute;left:0;top:6px;width:1228px;display:flex;flex-wrap:wrap;transition:transform .35s}
+  .card2{width:292px;height:230px;margin:0 20px 16px 0;padding:10px;box-sizing:border-box;border-radius:24px;transition:transform .2s,box-shadow .2s,background .2s}
+  .card2:nth-child(4n){margin-right:0}
+  .card2.focus{transform:scale(1.03);background:rgba(245,240,230,.10);box-shadow:0 0 0 3px var(--gold),0 20px 50px rgba(0,0,0,.4)}
+  .card2 .th{position:relative;height:153px;border-radius:16px;overflow:hidden;background:var(--graphite)}
+  .card2 .th img{width:100%;height:100%;object-fit:cover;display:block}
+  .card2 .th.kbd{font-size:72px;line-height:153px;text-align:center;color:var(--muted)}
+  .card2 .badge{position:absolute;right:8px;bottom:8px;padding:3px 10px;border-radius:10px;background:rgba(31,30,27,.8);font-size:13px;letter-spacing:.16em;text-transform:uppercase}
+  .card2 .tt{margin:10px 4px 0;font-size:17px;line-height:1.3;max-height:44px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .card2.now .tt{color:var(--gold)}
+  .libEmpty{padding:40px 10px;font-size:24px;letter-spacing:.1em;color:var(--muted)}
+  .kbInput{height:88px;line-height:88px;border-radius:44px;padding:0 40px;margin:6px 0 34px;font-size:36px;background:rgba(245,240,230,.10);white-space:nowrap;overflow:hidden}
+  .kbInput .muted{color:var(--muted)}
+  .caret{display:inline-block;width:3px;height:42px;margin-left:4px;vertical-align:middle;background:var(--gold);animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .kRow{display:flex;margin-bottom:12px}
+  .key{width:104px;height:76px;line-height:76px;margin-right:12px;border-radius:20px;text-align:center;font-size:28px;background:rgba(245,240,230,.08)}
+  .key.wide{width:336px;font-size:20px;letter-spacing:.14em;text-transform:uppercase}
+  .key.mid{width:220px}
+  .key.go{background:rgba(245,240,230,.9);color:var(--graphite);font-size:22px;letter-spacing:.16em;text-transform:uppercase}
+  .key.focus{box-shadow:0 0 0 3px var(--gold);background:rgba(245,240,230,.24)}
+  .key.go.focus{background:var(--cream)}
 
   /* spacing in flex rows: margins, not "gap" (flex gap needs Chrome 84; older Samsung TVs ignore it) */
   .clockPill>*+*{margin-left:26px} .dRow>*+*{margin-left:24px} .chipRow>*+*{margin-left:14px} .eq>*+*{margin-left:4px}
@@ -271,6 +307,17 @@
     </div>
   </div>
 
+  <div id="lib">
+    <div class="libSheet glass">
+      <div class="libHead"><h2 id="libTitle"></h2><div class="libKeys" id="libKeys"></div></div>
+      <div class="cats" id="libCats"></div>
+      <div class="libMain">
+        <div class="libGrid" id="libGrid"></div>
+        <div id="libKb"><div class="kbInput" id="kbInput"></div><div id="kbKeys"></div></div>
+      </div>
+    </div>
+  </div>
+
   <div class="msg glass" id="toast"></div>
   <div class="msg" id="hint"></div>
   <div class="msg glass" id="paused"><div class="pt" data-i18n="paused"></div><small data-i18n="resume"></small></div>
@@ -289,6 +336,8 @@ var CONFIG = {
   langSeconds: 14,            // TR ⇄ EN swap; never both on screen
   dockIdleSeconds: 7,         // expanded player dock folds back after this
   glass: "high",              // "high" = real blur, "lite" = solid tint for slow TVs
+  youtubeApiKey: "",          // turns on "Ara" (YouTube search) in the music library
+  library: [],                // moods for the music library: [{ name:{tr,en}, items:[{ id | playlist, title }] }]
   ytHost: "https://www.youtube.com",   // carries the TV's YouTube sign-in, so a Premium account plays without ads;
                                        // "https://www.youtube-nocookie.com" = privacy mode, never signed in
   cafe: {
@@ -332,7 +381,12 @@ var TXT = {
   hint:{tr:"Ses için OK tuşuna basın",en:"Press OK for sound"},
   ambient:{tr:"Fermata Ambient",en:"Fermata Ambient"}, live:{tr:"CANLI",en:"LIVE"},
   yt:{tr:"YouTube",en:"YouTube"}, unavailable:{tr:"Video açılamadı",en:"Video unavailable"},
-  keys:{tr:"← →  seç     OK  oynat     ↓  kapat", en:"← →  choose     OK  play     ↓  close"}
+  keys:{tr:"← →  seç     OK  oynat     ↓  kapat", en:"← →  choose     OK  play     ↓  close"},
+  library:{tr:"Müzik seç",en:"Choose music"}, libSub:{tr:"Kütüphane · Arama",en:"Library · Search"},
+  libSubNoSearch:{tr:"Kütüphane",en:"Library"}, search:{tr:"Ara",en:"Search"}, newSearch:{tr:"Yeni arama",en:"New search"},
+  pick:{tr:"Seçiminiz",en:"Your pick"}, searching:{tr:"Aranıyor…",en:"Searching…"}, noResults:{tr:"Sonuç yok",en:"No results"},
+  searchFail:{tr:"Arama yapılamadı",en:"Search failed"}, space:{tr:"boşluk",en:"space"}, list:{tr:"Liste",en:"List"},
+  libKeys:{tr:"↑ ↓ ← →  gez     OK  çal     Geri  kapat", en:"↑ ↓ ← →  move     OK  play     Back  close"}
 };
 
 var ICON_PLAY = '<svg viewBox="0 0 24 24"><path d="M7 4.5v15L19.5 12z"/></svg>';
@@ -343,7 +397,7 @@ var PICTO = "assets/fermata-pictogram-gold.svg";
 function $(id){ return document.getElementById(id); }
 function T(o){ return (o && (o[S.lang] || o.tr || o.en)) || ""; }
 function CH(){ return CONFIG.channels; }
-function chan(){ return CH()[S.ch]; }
+function chan(){ return S.pick || CH()[S.ch]; }   // a library pick stands in for the channel until the next block
 function isYT(){ return chan().source === "youtube"; }
 function pad(n){ return (n<10?"0":"")+n; }
 function fmt(s){ s = Math.max(0, Math.floor(s||0)); var h = Math.floor(s/3600), m = Math.floor(s%3600/60), x = s%60; return (h ? h+":"+pad(m) : m)+":"+pad(x); }
@@ -551,7 +605,7 @@ function scheduledIndex(){
 }
 function startChannel(i, manual){
   var n = CH().length; stopAll();
-  S.ch = ((i % n) + n) % n; S.track = 0; S.vid = 0;
+  S.pick = null; S.ch = ((i % n) + n) % n; S.track = 0; S.vid = 0;
   if (manual){ S.override = true; S.overrideBlock = scheduledIndex(); } else S.override = false;
   var cols = chan().colors || [], st = $("stage").style;
   if (cols[0]) st.setProperty("--c1", cols[0]); if (cols[1]) st.setProperty("--c2", cols[1]); if (cols[2]) st.setProperty("--c3", cols[2]);
@@ -562,7 +616,7 @@ function startChannel(i, manual){
 setInterval(function(){
   var s = scheduledIndex();
   if (S.override && s !== S.overrideBlock) S.override = false;
-  if (CONFIG.autoSchedule && !S.override && s !== S.ch) startChannel(s, false);
+  if (CONFIG.autoSchedule && !S.override && (s !== S.ch || S.pick)) startChannel(s, false);
 }, 30000);
 
 /* ════════════════ sound unlock ════════════════ */
@@ -656,6 +710,7 @@ function renderTexts(){
   updateNow(); buildTiles();
 }
 function swapLang(){
+  if (LIB.open) return;   // hold one language while staff are browsing
   var sw = document.querySelectorAll(".swap"), i;
   for (i=0;i<sw.length;i++) sw[i].classList.add("out");
   setTimeout(function(){ S.lang = S.lang === "tr" ? "en" : "tr"; renderTexts(); for (i=0;i<sw.length;i++) sw[i].classList.remove("out"); }, 800);
@@ -731,7 +786,7 @@ function nextSlide(fade){
 setInterval(function(){
   var m = CONFIG.menu || {};
   if (!MC.slides) buildSlides();
-  var show = MC.slides.length > 0 && !S.menuOpen && (S.mode !== "yt" || (Date.now()/1000) % (m.everySeconds||180) < (m.showSeconds||45));
+  var show = MC.slides.length > 0 && !S.menuOpen && !LIB.open && (S.mode !== "yt" || (Date.now()/1000) % (m.everySeconds||180) < (m.showSeconds||45));
   if (show && !MC.visible){ nextSlide(false); MC.timer = setInterval(function(){ nextSlide(true); }, (m.seconds||9)*1000); }
   if (!show && MC.visible) clearInterval(MC.timer);
   MC.visible = show; $("menuCard").classList.toggle("hide", !show);
@@ -758,17 +813,21 @@ function rotateQR(){
 }
 
 /* ════════════════ channel menu ════════════════ */
+function hasLib(){ return !!(CONFIG.youtubeApiKey || (CONFIG.library || []).length); }
+function menuItems(){ var it = [{auto:true}].concat(CH()); if (hasLib()) it.push({lib:true}); return it; }
 function buildTiles(){
   var wrap = $("tiles"); wrap.innerHTML = "";
-  var items = [{auto:true}].concat(CH());
+  var items = menuItems();
   items.forEach(function(it, i){
     var d = document.createElement("div"); d.className = "tile glass" + (i===S.focus ? " focus" : "");
-    var c = it.auto ? ["#F5F0E6","#C7A267"] : (it.colors || ["#C7A267","#F5F0E6"]);
+    var c = it.auto ? ["#F5F0E6","#C7A267"] : it.lib ? ["#C7A267","#D9DEB4"] : (it.colors || ["#C7A267","#F5F0E6"]);
     d.style.setProperty("--t1", c[1]||c[0]); d.style.setProperty("--t2", c[0]);
-    if ((it.auto && CONFIG.autoSchedule && !S.override) || (!it.auto && S.override && i-1 === S.ch)) d.className += " current";
-    var sub = it.auto ? T(TXT.autoSub) : hourLabel(it) + (it.source === "youtube" ? "  ·  YouTube" : "");
+    if ((it.auto && CONFIG.autoSchedule && !S.override) || (it.lib && S.pick) ||
+        (!it.auto && !it.lib && S.override && !S.pick && i-1 === S.ch)) d.className += " current";
+    var sub = it.auto ? T(TXT.autoSub) : it.lib ? T(CONFIG.youtubeApiKey ? TXT.libSub : TXT.libSubNoSearch)
+            : hourLabel(it) + (it.source === "youtube" ? "  ·  YouTube" : "");
     d.innerHTML = '<div class="dot"></div><div><div class="tn"></div><div class="th"></div></div>';
-    d.querySelector(".tn").textContent = it.auto ? T(TXT.auto) : T(it.name);
+    d.querySelector(".tn").textContent = it.auto ? T(TXT.auto) : it.lib ? T(TXT.library) : T(it.name);
     d.querySelector(".th").textContent = sub;
     d.onclick = function(e){ e.stopPropagation(); S.focus = i; selectFocus(); };
     wrap.appendChild(d);
@@ -776,10 +835,154 @@ function buildTiles(){
 }
 function openMenu(){ $("ui").classList.add("dim"); S.menuOpen = true; S.focus = S.override ? S.ch+1 : 0; buildTiles(); $("menu").classList.add("open"); }
 function closeMenu(){ $("ui").classList.remove("dim"); S.menuOpen = false; $("menu").classList.remove("open"); }
-function moveFocus(d){ var n = CH().length+1; S.focus = (S.focus+d+n) % n; buildTiles(); }
+function moveFocus(d){ var n = menuItems().length; S.focus = (S.focus+d+n) % n; buildTiles(); }
 function selectFocus(){
+  if ((menuItems()[S.focus] || {}).lib){ closeMenu(); openLib(); return; }
   if (S.focus === 0){ CONFIG.autoSchedule = true; startChannel(scheduledIndex(), false); } else startChannel(S.focus-1, true);
   setPlaying(true); closeMenu();
+}
+
+/* ════════════════ music library & YouTube search ════════════════ */
+// Moods from playlist.json "library", plus "Ara" (search) when playlist.json has a "youtubeApiKey".
+// A pick plays at once and holds until the next schedule block.
+var KEYROWS = [["a","b","c","ç","d","e","f","g","ğ","h"], ["ı","i","j","k","l","m","n","o","ö","p"],
+               ["r","s","ş","t","u","ü","v","y","z","q"], ["w","x","1","2","3","4","5","6","7","8"],
+               ["9","0"," ","del","go"]];
+var LASTROW_AT = [0, 1, 2, 5, 7];   // visual column where each last-row key starts (space is 3 wide, ⌫ and Ara 2)
+var ROWH = 246;                     // card height + bottom margin
+var LIB = { open:false, zone:"cats", cat:0, gi:0, kr:0, kc:0, query:"", results:null, busy:false };
+
+function libCats(){
+  var c = []; if (CONFIG.youtubeApiKey) c.push({ search:true, name:TXT.search });
+  return c.concat(CONFIG.library || []);
+}
+function libItems(){
+  var c = libCats()[LIB.cat]; if (!c) return [];
+  if (c.search) return LIB.results ? [{ newSearch:true }].concat(LIB.results) : [];
+  return (c.items || []).map(function(v){ return typeof v === "string" ? { id:v } : v; });
+}
+function showingKeys(){ var c = libCats()[LIB.cat] || {}; return !!c.search && (LIB.zone === "keys" || !LIB.results); }
+function openLib(){
+  if (LIB.cat >= libCats().length) LIB.cat = 0;
+  LIB.open = true; LIB.zone = "cats"; LIB.gi = 0;
+  $("ui").classList.add("dim"); renderLib(); $("lib").classList.add("open");
+}
+function closeLib(){ LIB.open = false; $("lib").classList.remove("open"); $("ui").classList.remove("dim"); }
+function nowId(){ if (S.mode !== "yt" || !YTP.ready) return ""; try { return (YTP.player.getVideoData() || {}).video_id || ""; } catch(e){ return ""; } }
+
+function renderLib(){
+  var cats = libCats();
+  $("libTitle").textContent = T(TXT.library);
+  $("libKeys").textContent = T(TXT.libKeys);
+  $("libCats").innerHTML = cats.map(function(c, i){
+    return '<div class="cat'+(i===LIB.cat ? ' sel' : '')+(i===LIB.cat && LIB.zone==="cats" ? ' focus' : '')+'">'+
+           (c.search ? '⌕&nbsp; ' : '')+esc(T(c.name))+'</div>';
+  }).join("");
+  var keys = showingKeys();
+  $("libGrid").style.display = keys ? "none" : "";
+  $("libKb").style.display = keys ? "" : "none";
+  if (keys) renderKeys(); else renderGrid();
+}
+function renderGrid(){
+  var items = libItems(), now = nowId(), g = $("libGrid");
+  if (!items.length){ g.innerHTML = '<div class="libEmpty">'+esc(T(TXT.noResults))+'</div>'; g.style.transform = ""; return; }
+  g.innerHTML = items.map(function(it, i){
+    var cls = "card2" + (LIB.zone==="grid" && i===LIB.gi ? " focus" : "") + (it.id && it.id === now ? " now" : "");
+    if (it.newSearch) return '<div class="'+cls+'"><div class="th kbd">⌕</div><div class="tt">'+esc(T(TXT.newSearch))+
+                             (LIB.query ? ' · “'+esc(LIB.query)+'”' : '')+'</div></div>';
+    var img = it.thumb || (it.id ? "https://i.ytimg.com/vi/"+it.id+"/mqdefault.jpg" : PICTO);
+    return '<div class="'+cls+'"><div class="th"><img alt="" src="'+esc(img)+'">'+
+           (it.playlist ? '<span class="badge">'+esc(T(TXT.list))+'</span>' : '')+'</div><div class="tt">'+esc(it.title || "")+'</div></div>';
+  }).join("");
+  var first = LIB.zone === "grid" ? Math.max(0, Math.floor(LIB.gi/4) - 1) : 0;   // keep the focused row in view
+  g.style.transform = "translateY("+(-first*ROWH)+"px)";
+}
+function renderKeys(){
+  $("kbInput").innerHTML = LIB.busy ? '<span class="muted">'+esc(T(TXT.searching))+'</span>'
+                                    : esc(LIB.query) + '<span class="caret"></span>';
+  $("kbKeys").innerHTML = KEYROWS.map(function(row, r){
+    return '<div class="kRow">' + row.map(function(k, c){
+      var lab = k === " " ? T(TXT.space) : k === "del" ? "⌫" : k === "go" ? T(TXT.search) : k;
+      var cls = "key" + (k === " " ? " wide" : "") + (k === "del" || k === "go" ? " mid" : "") + (k === "go" ? " go" : "") +
+                (LIB.zone === "keys" && r === LIB.kr && c === LIB.kc ? " focus" : "");
+      return '<div class="'+cls+'">'+esc(lab)+'</div>';
+    }).join("") + '</div>';
+  }).join("");
+}
+function vcol(r, c){ return r === KEYROWS.length-1 ? LASTROW_AT[c] : c; }
+function colAt(r, x){
+  if (r !== KEYROWS.length-1) return Math.min(x, KEYROWS[r].length-1);
+  for (var i=LASTROW_AT.length-1;i>=0;i--) if (x >= LASTROW_AT[i]) return i;
+  return 0;
+}
+function pressKey(k){
+  if (k === "del") LIB.query = LIB.query.slice(0, -1);
+  else if (k === "go"){ doSearch(); return; }
+  else if (LIB.query.length < 60) LIB.query += k;
+  renderKeys();
+}
+function decode(s){ var t = document.createElement("textarea"); t.innerHTML = s; return t.value; }
+function doSearch(){
+  var q = LIB.query.replace(/^\s+|\s+$/g, ""); if (!q || LIB.busy || !window.fetch) return;
+  LIB.busy = true; renderKeys();
+  var url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoEmbeddable=true&maxResults=24" +
+            "&safeSearch=moderate&regionCode=TR&q="+encodeURIComponent(q)+"&key="+encodeURIComponent(CONFIG.youtubeApiKey);
+  fetch(url).then(function(r){ return r.json(); }).then(function(d){
+    if (d.error) throw new Error(d.error.message);
+    LIB.results = (d.items || []).filter(function(x){ return x.id && x.id.videoId; }).map(function(x){
+      var th = x.snippet.thumbnails || {};
+      return { id:x.id.videoId, title:decode(x.snippet.title), thumb:(th.medium || th["default"] || {}).url };
+    });
+    LIB.busy = false; LIB.zone = "grid"; LIB.gi = LIB.results.length ? 1 : 0;
+    if (LIB.open) renderLib();
+  })["catch"](function(err){ console.warn("search:", err); LIB.busy = false; toast(T(TXT.searchFail), 4000); if (LIB.open) renderLib(); });
+}
+function playPick(it){
+  var base = CH()[S.ch];
+  S.pick = { id:"pick", source:"youtube", name:TXT.pick, colors:base.colors, menu:base.menu, synth:base.synth,
+             youtube: it.playlist ? { playlist:it.playlist } : { videos:[{ id:it.id, title:it.title }] } };
+  stopAll(); S.override = true; S.overrideBlock = scheduledIndex(); MC.slides = null;
+  startYouTube(); renderTexts(); toast(it.title || T(TXT.pick)); setPlaying(true); wakeDock();
+}
+function libKey(e){ // returns true when the key was used
+  var k = e.keyCode, cats = libCats(), items, n;
+  if (k === 10009 || k === 27){ closeLib(); return true; }
+  if (LIB.zone === "cats"){
+    if (k === 38){ if (LIB.cat > 0){ LIB.cat--; LIB.gi = 0; } }
+    else if (k === 40){ if (LIB.cat < cats.length-1){ LIB.cat++; LIB.gi = 0; } }
+    else if (k === 39 || k === 13){
+      if ((cats[LIB.cat] || {}).search && !LIB.results) LIB.zone = "keys";
+      else if (libItems().length){ LIB.zone = "grid"; LIB.gi = 0; }
+    }
+    else if (k === 8){ closeLib(); return true; }
+    else return false;
+  } else if (LIB.zone === "grid"){
+    items = libItems(); n = items.length;
+    if (k === 37){ if (LIB.gi % 4 === 0) LIB.zone = "cats"; else LIB.gi--; }
+    else if (k === 39){ if (LIB.gi % 4 < 3 && LIB.gi < n-1) LIB.gi++; }
+    else if (k === 38){ if (LIB.gi >= 4) LIB.gi -= 4; }
+    else if (k === 40){ if (LIB.gi + 4 < n) LIB.gi += 4; else if (Math.floor(LIB.gi/4) < Math.floor((n-1)/4)) LIB.gi = n-1; }
+    else if (k === 13){
+      var it = items[LIB.gi]; if (!it) return true;
+      if (it.newSearch) LIB.zone = "keys"; else { closeLib(); playPick(it); return true; }
+    }
+    else if (k === 8) LIB.zone = "cats";
+    else return false;
+  } else { // on-screen keyboard
+    var row = KEYROWS[LIB.kr];
+    if (k === 37){ if (LIB.kc === 0) LIB.zone = "cats"; else LIB.kc--; }
+    else if (k === 39){ if (LIB.kc < row.length-1) LIB.kc++; }
+    else if (k === 38 || k === 40){
+      var r = LIB.kr + (k === 40 ? 1 : -1);
+      if (r >= 0 && r < KEYROWS.length){ LIB.kc = colAt(r, vcol(LIB.kr, LIB.kc)); LIB.kr = r; }
+      else if (k === 40 && LIB.results){ LIB.zone = "grid"; LIB.gi = 0; }
+    }
+    else if (k === 13) { pressKey(row[LIB.kc]); return true; }
+    else if (k === 8) { pressKey("del"); return true; }
+    else if (e.key && e.key.length === 1 && /[0-9a-zçğıöşüi ]/i.test(e.key)){ pressKey(e.key.toLowerCase()); return true; }
+    else return false;
+  }
+  renderLib(); return true;
 }
 
 /* ════════════════ toast ════════════════ */
@@ -794,12 +997,13 @@ function screenInfo(){ // INFO key: what the TV browser really renders, and the 
 
 /* ════════════════ remote, keyboard, mouse ════════════════ */
 try { if (window.tizen && tizen.tvinputdevice)
-  ["MediaPlayPause","MediaPlay","MediaPause","MediaStop","MediaFastForward","MediaRewind","MediaTrackNext","MediaTrackPrevious","ChannelUp","ChannelDown","Info"]
+  ["MediaPlayPause","MediaPlay","MediaPause","MediaStop","MediaFastForward","MediaRewind","MediaTrackNext","MediaTrackPrevious","ChannelUp","ChannelDown","Info","ColorF1Green"]
     .forEach(function(k){ try { tizen.tvinputdevice.registerKey(k); } catch(e){} }); } catch(e){}
 
 document.addEventListener("keydown", function(e){
   var k = e.keyCode;
   if (!S.unlocked){ unlock(); if (k === 13 || k === 32){ e.preventDefault(); return; } }
+  if (LIB.open){ if (libKey(e)) e.preventDefault(); return; }
   if (S.menuOpen){
     if (k===37) moveFocus(-1); else if (k===39) moveFocus(1);
     else if (k===13||k===32) selectFocus();
@@ -814,6 +1018,7 @@ document.addEventListener("keydown", function(e){
     case 37: case 412: case 10232: case 80: step(-1); wakeDock(); break;
     case 39: case 417: case 10233: case 78:  step(1);  wakeDock(); break;
     case 38: openMenu(); break;
+    case 404: case 76: if (hasLib()) openLib(); break;   // green button (or L) opens the music library
     case 40: toggleDock(); break;
     case 427: case 33: startChannel(S.ch+1, true); setPlaying(true); break;
     case 428: case 34: startChannel(S.ch-1, true); setPlaying(true); break;
@@ -833,7 +1038,7 @@ Array.prototype.forEach.call(document.querySelectorAll("[data-act]"), function(b
   });
 });
 $("dock").addEventListener("click", function(e){ e.stopPropagation(); if (!S.unlocked) unlock(); wakeDock(); });
-$("stage").addEventListener("click", function(){ if (!S.unlocked){ unlock(); return; } if (S.menuOpen) closeMenu(); else openMenu(); });
+$("stage").addEventListener("click", function(){ if (!S.unlocked){ unlock(); return; } if (LIB.open) closeLib(); else if (S.menuOpen) closeMenu(); else openMenu(); });
 var ptrT;
 document.addEventListener("mousemove", function(){ document.body.classList.add("pointer"); clearTimeout(ptrT); ptrT = setTimeout(function(){ document.body.classList.remove("pointer"); }, 3000); });
 
@@ -848,7 +1053,7 @@ setInterval(function(){ var d = new Date(); if (d.getHours()===7 && d.getMinutes
 /* ════════════════ playlist.json ════════════════ */
 var lastJSON = "";
 function merge(j){
-  ["autoSchedule","tryUnmutedAutoplay","volume","langSeconds","dockIdleSeconds","glass","ytHost"].forEach(function(k){ if (j[k] !== undefined) CONFIG[k] = j[k]; });
+  ["autoSchedule","tryUnmutedAutoplay","volume","langSeconds","dockIdleSeconds","glass","ytHost","youtubeApiKey","library"].forEach(function(k){ if (j[k] !== undefined) CONFIG[k] = j[k]; });
   if (j.special) CONFIG.special = j.special;
   if (j.menu) for (var mk in j.menu) CONFIG.menu[mk] = j.menu[mk];
   MC.slides = null;
