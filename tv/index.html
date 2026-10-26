@@ -463,13 +463,16 @@ var Synth = {
 };
 
 /* ════════════════ YouTube (IFrame Player API) ════════════════ */
-var YTP = { player:null, ready:false, loading:false, cbs:[], errors:0, apTimer:null };
+var YTP = { player:null, ready:false, loading:false, cbs:[], errors:0, apTimer:null, quiet:false };
 function loadYT(cb){
   if (window.YT && YT.Player){ cb(); return; }
   YTP.cbs.push(cb); if (YTP.loading) return; YTP.loading = true;
   window.onYouTubeIframeAPIReady = function(){ var f = YTP.cbs; YTP.cbs = []; f.forEach(function(x){ x(); }); };
   var s = document.createElement("script"); s.src = "https://www.youtube.com/iframe_api";
-  s.onerror = function(){ toast(T(TXT.unavailable)); localFallback(); };
+  s.onerror = function(){ // no internet at start-up: play the ambient now, recover() tries YouTube again later
+    YTP.loading = false; YTP.cbs = []; if (s.parentNode) s.parentNode.removeChild(s);
+    if (!YTP.quiet) toast(T(TXT.unavailable)); localFallback();
+  };
   document.head.appendChild(s);
 }
 function createPlayer(done){
@@ -500,19 +503,22 @@ function cueChannel(){
   if (!S.playing) setTimeout(function(){ p.pauseVideo(); }, 900);
   checkAutoplay();
 }
-function checkAutoplay(){
+function checkAutoplay(tries){
+  tries = tries || 0;
   clearTimeout(YTP.apTimer);
   YTP.apTimer = setTimeout(function(){
     if (!isYT() || !S.playing || !YTP.ready) return;
-    var p = YTP.player;
-    if (p.getPlayerState() !== 1){ p.mute(); p.playVideo(); showHint(); }   // blocked with sound → run muted
-    else if (p.isMuted()) showHint(); else setUnlocked();
+    var p = YTP.player, st = p.getPlayerState();
+    if (st === 1){ if (!p.isMuted()) setUnlocked(); else if (S.unlocked) p.unMute(); else showHint(); return; }
+    if (st === 3 && tries < 6){ checkAutoplay(tries + 1); return; }   // still buffering on a slow TV: look again, don't mute
+    if (S.unlocked && tries < 6){ p.unMute(); p.playVideo(); checkAutoplay(tries + 1); return; }   // OK was pressed today: sound is allowed
+    p.mute(); p.playVideo(); showHint();                               // blocked with sound → run muted, ask for OK
   }, 3200);
 }
 function onYTState(e){
   if (!isYT()) return;
   if (e.data === 1){
-    YTP.errors = 0; if (!S.playing) YTP.player.pauseVideo(); updateNow(); renderQueue();
+    YTP.errors = 0; YTP.quiet = false; if (!S.playing) YTP.player.pauseVideo(); updateNow(); renderQueue();
     try { YTP.player.unloadModule("captions"); YTP.player.unloadModule("cc"); } catch(x){}   // some uploads force "[music]" captions on
   }
 }
@@ -520,7 +526,11 @@ function onYTError(){
   if (!isYT()) return;
   YTP.errors++;
   var n = (YTP.player.getPlaylist() || []).length || 1;
-  if (YTP.errors > n){ toast(T(TXT.unavailable)); localFallback(); return; }
+  if (YTP.errors > n){
+    if (!YTP.quiet) toast(T(TXT.unavailable));
+    if (S.pick) startChannel(scheduledIndex(), false); else localFallback();   // a pick that won't play: back to the schedule
+    return;
+  }
   setTimeout(function(){ try { YTP.player.nextVideo(); } catch(e){} }, 900);   // not embeddable / removed → skip
 }
 function localFallback(){ // YouTube unreachable: keep the room sounding with the channel's ambient
@@ -707,7 +717,7 @@ function renderTexts(){
   $("chip").textContent = T(chan().name);
   $("chip").classList.toggle("auto", CONFIG.autoSchedule && !S.override);
   if ($("hint").classList.contains("show")) $("hint").textContent = T(TXT.hint);
-  $("qrCap").textContent = T(((CONFIG.cafe.qrs||[])[qrIdx] || {}).caption);
+  $("qrCap").textContent = T((QRS[qrIdx] || {}).caption);
   updateNow(); buildTiles();
   if (LIB.open) renderLib();   // the library must follow the same language as everything else
 }
@@ -795,11 +805,11 @@ setInterval(function(){
 }, 1000);
 setInterval(loadMenu, 3600000);
 
-var qrIdx = 0, qrKey = "";
+var qrIdx = 0, qrKey = "", QRS = [];
 function renderQRs(){
   var list = (CONFIG.cafe.qrs || []).filter(function(q){ return q && q.url; });
   if (!list.length || typeof QRCode === "undefined"){ $("qrCard").style.display = "none"; return; }
-  var key = list.map(function(q){ return q.url; }).join("|"); if (key === qrKey) return; qrKey = key;
+  var key = list.map(function(q){ return q.url; }).join("|"); if (key === qrKey) return; qrKey = key; QRS = list;
   $("qrCard").style.display = ""; var box = $("qrs"); box.innerHTML = ""; qrIdx = 0;
   list.forEach(function(q, i){
     var d = document.createElement("div"); d.className = "qrItem" + (i===0 ? " on" : ""); box.appendChild(d);
@@ -811,7 +821,7 @@ function rotateQR(){
   var items = $("qrs").children; if (items.length < 2) return;
   items[qrIdx].classList.remove("on"); qrIdx = (qrIdx+1) % items.length; items[qrIdx].classList.add("on");
   $("qrCap").classList.add("out");
-  setTimeout(function(){ $("qrCap").textContent = T(CONFIG.cafe.qrs[qrIdx].caption); $("qrCap").classList.remove("out"); }, 500);
+  setTimeout(function(){ $("qrCap").textContent = T((QRS[qrIdx] || {}).caption); $("qrCap").classList.remove("out"); }, 500);
 }
 
 /* ════════════════ channel menu ════════════════ */
@@ -950,6 +960,12 @@ function playPick(it){
              youtube: it.playlist ? { playlist:it.playlist } : { videos:[{ id:it.id, title:it.title }] } };
   stopAll(); S.override = true; S.overrideBlock = scheduledIndex(); MC.slides = null;
   startYouTube(); renderTexts(); toast(it.title || T(TXT.pick)); setPlaying(true); wakeDock();
+  var mine = S.pick;   // YouTube silently keeps the old video when it refuses one (blocked, private): catch that
+  if (it.id) setTimeout(function(){
+    if (S.pick !== mine || !YTP.ready) return;
+    var d = {}; try { d = YTP.player.getVideoData() || {}; } catch(e){}
+    if (d.video_id && d.video_id !== it.id){ toast(T(TXT.unavailable), 4000); startChannel(scheduledIndex(), false); }
+  }, 7000);
 }
 function libKey(e){ // returns true when the key was used
   var k = e.keyCode, cats = libCats(), items, n;
@@ -1083,15 +1099,39 @@ function wake(){ try { if (navigator.wakeLock) navigator.wakeLock.request("scree
 document.addEventListener("visibilitychange", function(){ if (!document.hidden) wake(); });
 setInterval(function(){ var d = new Date(); if (d.getHours()===7 && d.getMinutes()===55) location.reload(); }, 60000);
 
+// Started without internet? Every 3 min quietly retry what failed: YouTube, the QR library, the menu.
+function recover(){
+  if (isYT() && S.mode !== "yt" && ((window.YT && YT.Player) || !YTP.loading)){ YTP.quiet = true; startYouTube(); }
+  if (typeof QRCode === "undefined" && !recover.qr){
+    recover.qr = true;
+    var s = document.createElement("script"); s.src = "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
+    s.onload = function(){ qrKey = ""; renderQRs(); };
+    s.onerror = function(){ recover.qr = false; if (s.parentNode) s.parentNode.removeChild(s); };
+    document.head.appendChild(s);
+  }
+  if (!MC.data) loadMenu();
+}
+setInterval(recover, 180000);
+
+// TV browser: the remote's Back key would leave the page; keep one history step so Back only closes sheets.
+if (!IN_APP && window.history && history.pushState){
+  try { history.pushState({ tv:1 }, "", location.href); } catch(e){}
+  addEventListener("popstate", function(){
+    try { history.pushState({ tv:1 }, "", location.href); } catch(e){}
+    if (LIB.open) closeLib(); else if (S.menuOpen) closeMenu();
+  });
+}
+
 /* ════════════════ playlist.json ════════════════ */
-var lastJSON = "";
-function merge(j){
+var lastJSON = "", lastChannels = "";
+function merge(j){ // returns true only when the channel list itself changed (so editing the special doesn't restart the music)
   ["autoSchedule","tryUnmutedAutoplay","volume","langSeconds","dockIdleSeconds","glass","ytHost","youtubeApiKey","library"].forEach(function(k){ if (j[k] !== undefined) CONFIG[k] = j[k]; });
   if (j.special) CONFIG.special = j.special;
   if (j.menu) for (var mk in j.menu) CONFIG.menu[mk] = j.menu[mk];
   MC.slides = null;
   if (j.cafe) for (var k in j.cafe) CONFIG.cafe[k] = j.cafe[k];
   if (j.channels && j.channels.length){
+    var chJSON = JSON.stringify(j.channels); if (chJSON === lastChannels) return false; lastChannels = chJSON;
     var def = CONFIG.channels;
     CONFIG.channels = j.channels.map(function(c, i){
       var b = def.filter(function(d){ return d.id === c.id; })[0] || def[i % def.length];
