@@ -1,0 +1,77 @@
+{
+  "autoSchedule": true,
+  "tryUnmutedAutoplay": true,
+  "volume": 0.7,
+  "glass": "high",
+  "special": { "tr": "Günün çorbası", "en": "Soup of the day" },
+  "menu": {
+    "source": "https://fermatakafe.github.io/",
+    "imgBase": "media/menu/",
+    "imgMap": { "tandir-cift.webp": "tandir.jpg" },
+    "seconds": 9,
+    "showSeconds": 45,
+    "everySeconds": 180
+  },
+  "cafe": {
+    "hours": "08.00 — 00.00",
+    "qrs": [
+      { "url": "https://fermatakafe.github.io/", "caption": { "tr": "Menü", "en": "Menu" } },
+      { "url": "https://whatsapp.com/channel/0029Vb9LJdaJP215tXv7B53G", "caption": { "tr": "WhatsApp kanalı", "en": "WhatsApp channel" } }
+    ]
+  },
+  "channels": [
+    {
+      "id": "morning", "source": "youtube", "hours": [8, 12],
+      "name": { "tr": "Sabah Kahvesi", "en": "Morning Coffee" },
+      "colors": ["#C7A267", "#F5F0E6", "#A8834B"],
+      "menu": ["kahvalti", "tost"],
+      "youtube": {
+        "videos": [
+          { "id": "RA3pcxaCkhg", "title": "Relaxing Bossa Nova for Your Morning Coffee" },
+          { "id": "FxzV5hha0HI", "title": "Cozy October Jazz – Bossa Nova Coffee Music" }
+        ],
+        "shuffle": true
+      }
+    },
+    {
+      "id": "lounge", "source": "youtube", "hours": [12, 16],
+      "name": { "tr": "Lounge", "en": "Lounge" },
+      "colors": ["#D9DEB4", "#C7A267", "#3B3A36"],
+      "menu": ["salata", "fit", "burger", "pizza", "makarna", "tost"],
+      "youtube": {
+        "videos": [
+          { "id": "VT9jQKQjwCY", "title": "Chill Bossa Nova Jazz – Coffee Shop" },
+          { "id": "EAm-TmNVnUY", "title": "Autumn Bossa Nova Jazz – Cozy Café" }
+        ],
+        "shuffle": true
+      }
+    },
+    {
+      "id": "poolside", "source": "youtube", "hours": [16, 20],
+      "name": { "tr": "Havuz Başı", "en": "Poolside" },
+      "colors": ["#D9DEB4", "#F5F0E6", "#9A8F7E"],
+      "menu": ["salata", "fit", "kizartma", "pizza", "tatli"],
+      "youtube": {
+        "videos": [
+          { "id": "l8y9miahT60", "title": "Elegant Chillout Lounge – Classy Evening" },
+          { "id": "skHI4Zi-CBA", "title": "Luxury Chillout Lounge – Evening Vibes" }
+        ],
+        "shuffle": true
+      }
+    },
+    {
+      "id": "aperitivo", "source": "youtube", "hours": [20, 24],
+      "name": { "tr": "Aperitivo", "en": "Aperitivo" },
+      "colors": ["#A8834B", "#C7A267", "#3B3A36"],
+      "menu": ["ana-yemek", "makarna", "pizza", "burger", "tatli"],
+      "youtube": {
+        "videos": [
+          { "id": "5dKDbYQOo30", "title": "Italian Chill Funk – Aperitivo Mood" },
+          { "id": "asAmkRtB73k", "title": "Luxury Lounge Bar – Italian Riviera Evening" },
+          { "id": "DZ6cBvKP7zA", "title": "Luxury Chillout Lounge – Upscale Evenings" }
+        ],
+        "shuffle": true
+      }
+    }
+  ]
+}
