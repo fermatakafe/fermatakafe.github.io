@@ -65,6 +65,7 @@
   .feature .name{font-size:32px}
   .feature .sub{max-width:34ch;color:var(--graphite)}
   .feature .price{font-size:20px}
+  .dish-tag{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--bronze)}
   .items.compact{gap:18px}
   .compact .item{min-height:0;align-items:baseline}
   .compact .txt{flex-direction:row;align-items:baseline;gap:12px}
@@ -124,7 +125,8 @@
    price: number in TL, e.g. 320. Leave 0 and the menu shows "—".
    Pizza: price is [normal, large], e.g. [380, 520]. Another two-price dish carries its own sizes (see Pişi).
    note: a short line under a drink's name (its size), the same in both languages.
-   feature: true shows the dish full width with a large photo (the breakfast plate).
+   feature: true shows the dish full width with a large photo (the breakfast plate, Pizza Irani).
+   tag: a small gold label above a feature dish's name, e.g. { tr: "Yeni", en: "New" }.
    img: the dish's file name in img/ (a transparent .webp, plus a small copy in img/thumb/). Leave "" for no photo. */
 const MENU = {
   text: {
@@ -170,11 +172,11 @@ const MENU = {
       { name: { tr: "Tavuk", en: "Chicken" }, line: { tr: "Çıtır tavuk but, cheddar peyniri, cheddar sos, lahana salatası, sweet chili sos, patates kızartması", en: "Crispy chicken thigh, cheddar, cheddar sauce, coleslaw, sweet chili sauce, fries" }, price: 685, img: "tavuk-burger.webp" }
     ]},
     { id: "pizza", name: { tr: "Pizza", en: "Pizza" }, sizes: { tr: ["Normal", "Büyük"], en: ["Regular", "Large"] }, items: [
+      { name: { tr: "Pizza Irani", en: "Pizza Irani" }, line: { tr: "Et jambon, hindi salam, dana salam, jalapeno, mantar, mozzarella peyniri", en: "Meat jambon, turkey salami, beef salami, jalapeño, mushrooms, mozzarella" }, price: [990, 1300], img: "pizza-irani.webp", feature: true, tag: { tr: "Yeni", en: "New" } },
       { name: { tr: "Margarita", en: "Margherita" }, line: { tr: "Domates sos, mozzarella peyniri, fesleğen", en: "Tomato sauce, mozzarella, basil" }, price: [580, 730], img: "margarita.webp" },
       { name: { tr: "Pepperoni", en: "Pepperoni" }, line: { tr: "Pepperoni, mozzarella peyniri, domates sos, acı biber", en: "Pepperoni, mozzarella, tomato sauce, hot peppers" }, price: [790, 910], img: "pepperoni.webp" },
       { name: { tr: "Tavuklu", en: "Chicken" }, line: { tr: "Tavuk, mozzarella peyniri, domates sos", en: "Chicken, mozzarella, tomato sauce" }, price: [690, 835], img: "tavuklu-pizza.webp" },
-      { name: { tr: "Dana bacon'lı", en: "Beef bacon" }, line: { tr: "Dana bacon, mozzarella peyniri, domates sos, acı biber", en: "Beef bacon, mozzarella, tomato sauce, hot peppers" }, price: [865, 1035], img: "baconli-pizza.webp" },
-      { name: { tr: "Pizza Irani", en: "Pizza Irani" }, line: { tr: "Et jambon, hindi salam, dana salam, jalapeno, mantar, mozzarella peyniri", en: "Meat jambon, turkey salami, beef salami, jalapeño, mushrooms, mozzarella" }, price: [990, 1300], img: "pizza-irani.webp" }
+      { name: { tr: "Dana bacon'lı", en: "Beef bacon" }, line: { tr: "Dana bacon, mozzarella peyniri, domates sos, acı biber", en: "Beef bacon, mozzarella, tomato sauce, hot peppers" }, price: [865, 1035], img: "baconli-pizza.webp" }
     ]},
     { id: "corba", name: { tr: "Çorba", en: "Soup" }, items: [
       { name: { tr: "Günün çorbası", en: "Soup of the day" }, line: { tr: "Günün çorbasını ekibimize sorunuz", en: "Please ask our team about today's soup" }, price: 330, feature: true, img: "corba.webp" }
@@ -253,10 +255,11 @@ function render(){
         const line = i.note || (i.line ? i.line[lang] : "");
         const sub = line ? `<span class="sub">${esc(line)}</span>` : "";
         const name = `<span class="name">${esc(i.name[lang])}</span>`;
+        const tag = i.tag ? `<span class="dish-tag">${esc(i.tag[lang])}</span>` : "";
         const src = i.feature ? `img/${esc(i.img)}` : `img/thumb/${esc(i.img)}`;
         const pic = i.img ? `<button class="pic" type="button" data-k="${k}" aria-label="${esc(i.name[lang])}"><img src="${src}" alt="" loading="lazy" width="148" height="148" onerror="this.parentNode.remove()"></button>` : "";
         if (s.compact) return `<div class="item"><div class="txt">${name}${sub}</div>${priceHtml(i, s)}</div>`;
-        if (i.feature) return `<div class="item feature">${pic}<div class="txt">${name}${sub}${priceHtml(i, s)}</div></div>`;
+        if (i.feature) return `<div class="item feature">${pic}<div class="txt">${tag}${name}${sub}${priceHtml(i, s)}</div></div>`;
         return `<div class="item"><div class="txt">${name}${sub}${priceHtml(i, s)}</div>${pic}</div>`;
       }).join("")}</div>
     </section>`).join("");
