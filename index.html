@@ -155,7 +155,6 @@ const MENU = {
     ]},
     { id: "salata", name: { tr: "Salata", en: "Salads" }, items: [
       { name: { tr: "Sezar", en: "Caesar" }, line: { tr: "Marul, kruton, parmesan peyniri, sezar sos; ızgara ya da çıtır tavuk göğsü", en: "Lettuce, croutons, parmesan, Caesar dressing; grilled or crispy chicken breast" }, price: 590, img: "sezar.webp" },
-      { name: { tr: "Fermata", en: "Fermata" }, line: { tr: "Pancar, üzüm pekmezi sos, karamelize ceviz, beluga mercimeği, portakal dilimleri, karışık yeşillik, soğan turşusu", en: "Beetroot, grape molasses dressing, caramelised walnuts, beluga lentils, orange segments, mixed greens, pickled onion" }, price: 570, img: "fermata-salata.webp" },
       { name: { tr: "Lahana", en: "Cabbage" }, line: { tr: "Beyaz lahana, havuç, mayonez", en: "White cabbage, carrot, mayonnaise" }, price: 250, img: "lahana-salatasi.webp" },
       { name: { tr: "Cacık", en: "Cacık" }, line: { tr: "Süzme yoğurt, salatalık, çörek otu, kuru nane, zeytinyağı, limon kabuğu", en: "Strained yoghurt, cucumber, nigella seeds, dried mint, olive oil, lemon zest" }, price: 220, img: "cacik.webp" }
     ]},
@@ -171,7 +170,7 @@ const MENU = {
       { name: { tr: "Tavuk", en: "Chicken" }, line: { tr: "Çıtır tavuk but, cheddar peyniri, cheddar sos, lahana salatası, sweet chili sos, patates kızartması", en: "Crispy chicken thigh, cheddar, cheddar sauce, coleslaw, sweet chili sauce, fries" }, price: 430, img: "tavuk-burger.webp" }
     ]},
     { id: "pizza", name: { tr: "Pizza", en: "Pizza" }, sizes: { tr: ["Normal", "Büyük"], en: ["Regular", "Large"] }, items: [
-      { name: { tr: "Pizza Irani", en: "Pizza Irani" }, line: { tr: "Et jambon, hindi salam, dana salam, jalapeno, mantar, mozzarella peyniri", en: "Meat jambon, turkey salami, beef salami, jalapeño, mushrooms, mozzarella" }, price: [990, 1300], img: "pizza-irani.webp", feature: true, tag: { tr: "Yeni", en: "New" } },
+      { name: { tr: "Pizza Irani", en: "Pizza Irani" }, line: { tr: "Et jambon, hindi salam, dana salam, jalapeno, mantar, mozzarella peyniri", en: "Meat jambon, turkey salami, beef salami, jalapeño, mushrooms, mozzarella" }, price: 890, img: "pizza-irani.webp", feature: true, tag: { tr: "Yeni", en: "New" } },
       { name: { tr: "Margarita", en: "Margherita" }, line: { tr: "Domates sos, mozzarella peyniri, fesleğen", en: "Tomato sauce, mozzarella, basil" }, price: [580, 730], img: "margarita.webp" },
       { name: { tr: "Pepperoni", en: "Pepperoni" }, line: { tr: "Pepperoni, mozzarella peyniri, domates sos, acı biber", en: "Pepperoni, mozzarella, tomato sauce, hot peppers" }, price: [690, 830], img: "pepperoni.webp" },
       { name: { tr: "Tavuklu", en: "Chicken" }, line: { tr: "Tavuk, mozzarella peyniri, domates sos", en: "Chicken, mozzarella, tomato sauce" }, price: [640, 760], img: "tavuklu-pizza.webp" },
@@ -192,7 +191,7 @@ const MENU = {
       { name: { tr: "Şinitzel", en: "Schnitzel" }, line: { tr: "Pane tavuk, patates kızartması, roka salatası, soğan turşusu, lahana salatası, sweet chili sos", en: "Breaded chicken, fries, rocket salad, pickled onion, coleslaw, sweet chili sauce" }, price: 590, img: "tavuk-sinitzel.webp" },
       { name: { tr: "Levrek", en: "Sea bass" }, line: { tr: "Tek fileto · 170 g levrek fileto, dereotlu pilav, limon sos, soğan turşusu", en: "Single fillet · 170 g sea bass fillet, dill rice, lemon sauce, pickled onion" }, price: 690, img: "tandir.webp" },
       { name: { tr: "Levrek", en: "Sea bass" }, line: { tr: "Çift fileto · 340 g levrek fileto (2 adet), dereotlu pilav, limon sos, soğan turşusu", en: "Double fillet · 340 g sea bass fillet (2 fillets), dill rice, lemon sauce, pickled onion" }, price: 970, img: "tandir-cift.webp" },
-      { name: { tr: "Tavuk şiş", en: "Chicken skewers" }, line: { tr: "Marine tavuk şiş, pilav, közlenmiş domates ve biber, soğan turşusu, yeşillik", en: "Marinated chicken skewers, rice, roasted tomato and pepper, pickled onion, greens" }, price: 680, img: "" }
+      { name: { tr: "Jooje kabab", en: "Jooje kabab" }, line: { tr: "Marine tavuk şiş, pilav, közlenmiş domates ve biber, soğan turşusu, yeşillik", en: "Marinated chicken skewers, rice, roasted tomato and pepper, pickled onion, greens" }, price: 690, img: "" }
     ]},
     { id: "kizartma", name: { tr: "Kızartma", en: "From the fryer" }, items: [
       { name: { tr: "Çıtır tavuk", en: "Crispy chicken" }, line: { tr: "Çıtır tavuk, patates kızartması, lahana salatası, sweet chili sos, tartar sos", en: "Crispy chicken, fries, coleslaw, sweet chili sauce, tartar sauce" }, price: 490, img: "citir-tavuk.webp" },
@@ -201,7 +200,7 @@ const MENU = {
       { name: { tr: "Patates", en: "Fries" }, line: { tr: "Patates kızartması, lahana salatası, sweet chili sos", en: "Fries, coleslaw, sweet chili sauce" }, price: 280, img: "patates.webp" }
     ]},
     { id: "tatli", name: { tr: "Tatlı", en: "Desserts" }, items: [
-      { name: { tr: "Sufle", en: "Chocolate soufflé" }, line: { tr: "", en: "" }, price: 520, img: "sufle.webp" },
+      { name: { tr: "Sufle", en: "Chocolate soufflé" }, line: { tr: "", en: "" }, price: 420, img: "sufle.webp" },
       { name: { tr: "Brownie", en: "Brownie" }, line: { tr: "", en: "" }, price: 460, img: "brownie.webp" },
       { name: { tr: "San Sebastian", en: "San Sebastian" }, line: { tr: "", en: "Basque cheesecake" }, price: 495, img: "san-sebastian.webp" },
       { name: { tr: "Cookie", en: "Cookie" }, line: { tr: "", en: "" }, price: 330, img: "cookie.webp" }
